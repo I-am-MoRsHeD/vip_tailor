@@ -102,10 +102,6 @@ const AddProduct = () => {
             title: "Product added successfully",
             showConfirmButton: false,
             timer: 1500,
-            imageUrl: "https://unsplash.it/400/200",
-            imageWidth: 400,
-            imageHeight: 200,
-            imageAlt: "Custom image",
           });
         } else {
           Swal.fire({

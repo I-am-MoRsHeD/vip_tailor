@@ -44,7 +44,7 @@ const OrderedList = () => {
     staleTime: 60000,
     queryFn: async () => {
       const res = await axiosPublic.get(
-        `/orderProduct/1/search?email=${email}&role=${role}&searchValue=${searchValue}&itemsPerPage=${itemsPerPage}&currentPage=${currentPage}&status=${status}`
+        `/orderProduct/1/search?email=${email}&searchValue=${searchValue}&itemsPerPage=${itemsPerPage}&currentPage=${currentPage}&status=${status}`
       );
       return res.data;
     },
