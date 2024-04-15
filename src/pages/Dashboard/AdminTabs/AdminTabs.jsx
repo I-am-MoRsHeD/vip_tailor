@@ -81,7 +81,6 @@ const AdminTabs = ({ allOrderProducts }) => {
     const totalqunatity = selectedData?.reduce((total, product) => total + parseInt(product?.quantity), 0) || 0;
 
     const totalSells = completeOrderAmount + totalSoldItemsAmount || 0 ;
-    console.log(soldItemsInfo)
 
 
     return (

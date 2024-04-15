@@ -160,7 +160,7 @@ const NewNav = () => {
           className={({ isActive }) =>
             `${
               isActive ? "active text-[#fff]" : "text-[#fff]"
-            }  transition navs duration-300 text-base lg:text-lg font-semibold `
+            }  transition navs duration-300 text-base xl:text-lg font-semibold `
           }
         >
           Home
@@ -170,7 +170,7 @@ const NewNav = () => {
       <li className="">
         <a
           onClick={(e) => handleAnchorClick(e, "featured")}
-          className="text-[#fff] duration-300 text-base lg:text-lg font-semibold transition navs cursor-pointer"
+          className="text-[#fff] duration-300 text-base xl:text-lg font-semibold transition navs cursor-pointer"
         >
           Featured Products
         </a>
@@ -178,7 +178,7 @@ const NewNav = () => {
       <li className="">
         <a
           onClick={(e) => handleAnchorClick(e, "notice")}
-          className="text-[#fff] duration-300 text-base lg:text-lg font-semibold  transition navs cursor-pointer"
+          className="text-[#fff] duration-300 text-base xl:text-lg font-semibold  transition navs cursor-pointer"
         >
           Notice Board
         </a>
@@ -190,7 +190,7 @@ const NewNav = () => {
           className={({ isActive }) =>
             `${
               isActive ? "active text-[#fff]" : "text-[#fff]"
-            } duration-300 text-base lg:text-lg font-semibold lg:mr-10 mr-0 transition navs mb-2 lg:mb-2`
+            } duration-300 text-base xl:text-lg font-semibold lg:mr-10 mr-0 transition navs mb-2 lg:mb-2`
           }
         >
           Contact Us
@@ -200,14 +200,14 @@ const NewNav = () => {
         {user ? (
           <button
             onClick={handleLogout}
-            className="lg:bg-white mb-2 lg:mb-0 bg-yellow-950 lg:text-black text-white text-base lg:text-lg font-semibold px-2 py-1 rounded "
+            className="lg:bg-white mb-2 lg:mb-0 bg-yellow-950 lg:text-black text-white text-base xl:text-lg font-semibold px-2 py-1 rounded "
           >
             Logout
           </button>
         ) : (
           <Link
             to="/login"
-            className="lg:bg-white mb-2 lg:mb-0 bg-yellow-950 lg:text-black text-white text-base lg:text-lg font-semibold px-2 py-1 rounded"
+            className="lg:bg-white mb-2 lg:mb-0 bg-yellow-950 lg:text-black text-white text-base xl:text-lg font-semibold px-2 py-1 rounded"
           >
             Log in
           </Link>
@@ -217,7 +217,7 @@ const NewNav = () => {
         {!user ? (
           <Link
             to="/register"
-            className="lg:bg-white bg-yellow-950 lg:text-black text-white text-base lg:text-lg font-semibold px-2 py-1 rounded "
+            className="lg:bg-white bg-yellow-950 lg:text-black text-white text-base xl:text-lg font-semibold px-2 py-1 rounded "
           >
             Registration
           </Link>
