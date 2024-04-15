@@ -77,10 +77,11 @@ const AdminTabs = ({ allOrderProducts }) => {
     const completeOrderAmount = completedOrders?.reduce((total, product) => total + (parseFloat(product?.price) * parseFloat(product?.quantity)), 0)
 
     const totalSoldItemsAmount = soldItemsInfo?.reduce((total, product) => total + parseInt(product?.price), 0)
-    const totalSellsByCategory = selectedData?.reduce((total, product) => total + parseInt(product?.price), 0)
-    const totalqunatity = selectedData?.reduce((total, product) => total + parseInt(product?.quantity), 0)
+    const totalSellsByCategory = selectedData?.reduce((total, product) => total + parseInt(product?.price), 0) || 0;
+    const totalqunatity = selectedData?.reduce((total, product) => total + parseInt(product?.quantity), 0) || 0;
 
-    const totalSells = completeOrderAmount + totalSoldItemsAmount;
+    const totalSells = completeOrderAmount + totalSoldItemsAmount || 0 ;
+    console.log(soldItemsInfo)
 
 
     return (

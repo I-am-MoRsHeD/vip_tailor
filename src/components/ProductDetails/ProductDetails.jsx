@@ -93,6 +93,7 @@ const ProductDetails = () => {
       email,
     };
     const quantity1 = parseInt(form.quantity.value);
+    console.log(quantity1)
     if (quantity1 > sell?.quantity) {
       Swal.fire({
         position: "top-end",
@@ -107,6 +108,15 @@ const ProductDetails = () => {
         position: "top-end",
         icon: "error",
         title: "Quantity cannot be a negative value",
+        showConfirmButton: false,
+        timer: 1000,
+      });
+    }
+    else if (!quantity1) {
+      Swal.fire({
+        position: "top-end",
+        icon: "error",
+        title: "Quantity cannot be a null value",
         showConfirmButton: false,
         timer: 1000,
       });
@@ -630,6 +640,7 @@ const ProductDetails = () => {
                       type="number"
                       placeholder={sell?.quantity}
                       //   placeholder="Put Quantity"
+                      // onInput={(e) => e.target.setCustomValidity(isNaN(e.target.value) ? "Please enter a valid quantity" : "")}
                       className="input input-bordered border-2 border-slate-500 w-full focus:outline-none"
                     />
                   </div>
