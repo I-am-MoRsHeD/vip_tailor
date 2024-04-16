@@ -88,18 +88,18 @@ const SignIn = () => {
                                     name="password"
                                     placeholder="Password"
                                     className="w-full bg-[#E7E6E6] placeholder-[#444444] py-4 rounded-lg border outline-none pl-8 pr-2 " required />
-                                {/* <span className='absolute right-0 cursor-pointer mr-2' onClick={() => setShowPassword(!showPassword)}>
+                                <span className='absolute right-0 cursor-pointer mr-2' onClick={() => setShowPassword(!showPassword)}>
                                     {
                                         showPassword ? <FaEye></FaEye> : <FaEyeSlash></FaEyeSlash>
                                     }
-                                </span> */}
+                                </span>
                             </div>
                             <div>
                                 {
                                     error ? <p className='text-red-600'>{error}</p> : ''
                                 }
                             </div>
-                            <div className='flex items-center justify-between mt-5'>
+                            {/* <div className='flex items-center justify-between mt-5'>
                                 <div className=' flex items-center'>
                                     <input type="checkbox" name="checkbox" id="checkbox" className='cursor-pointer' />
                                     <label htmlFor="checkbox" className='font-semibold text-[#444444] ml-1 cursor-pointer'>Remember Me</label>
@@ -107,7 +107,7 @@ const SignIn = () => {
                                 <div>
                                     <h4 className='text-right my-2 text-blue-600 cursor-pointer'>Forgot Password</h4>
                                 </div>
-                            </div>
+                            </div> */}
                             <div className="form-control  mt-8">
                                 <button className="text-xl rounded-md font-semibold  py-4 bg-[#444444] text-white hover:bg-[#292929] ">Sign In</button>
                             </div>

@@ -7,6 +7,7 @@ import { useState } from "react";
 import useAxiosPublic from "../../../hooks/useAxiosPublic";
 import Swal from "sweetalert2";
 import { updateProfile } from "@firebase/auth";
+import { FaEye, FaEyeSlash } from "react-icons/fa";
 
 const image_hosting_key = import.meta.env.VITE_IMAGE_HOSITNG_KEY;
 const image_hosing_api = `https://api.imgbb.com/1/upload?key=${image_hosting_key}`;
@@ -14,6 +15,7 @@ const image_hosing_api = `https://api.imgbb.com/1/upload?key=${image_hosting_key
 const Registation = () => {
     const { createUser, googleSignIn } = useAuth();
     const [error, setError] = useState();
+    const [showPassword, setShowPassword] = useState(false);
     const axiosPublic = useAxiosPublic();
     const navigate = useNavigate();
 
@@ -115,9 +117,15 @@ const Registation = () => {
                                 />
                             </div>
                             <div className='flex flex-col items-center justify-center relative'>
-                                <input type="password" placeholder='Password' name='password'
+                                <input
+                                    type={showPassword ? "text" : "password"} placeholder='Password' name='password'
                                     className='w-full py-4 bg-[#E7E6E6] placeholder-[#444444] rounded-lg border outline-none pl-8 pr-2'
                                 />
+                                <span className='absolute right-0 cursor-pointer mr-2' onClick={() => setShowPassword(!showPassword)}>
+                                    {
+                                        showPassword ? <FaEye></FaEye> : <FaEyeSlash></FaEyeSlash>
+                                    }
+                                </span>
                             </div>
                             {/* <div className='flex flex-col items-center justify-center relative'>
                             <input type="file" placeholder='' name='image'
@@ -125,7 +133,7 @@ const Registation = () => {
                             />
                         </div> */}
 
-                            <div className='px-1 mt-3 flex flex-row justify-between items-center'>
+                            {/* <div className='px-1 mt-3 flex flex-row justify-between items-center'>
                                 <div className="flex text-sm md:text-base gap-2">
                                     <input type="checkbox" name="checkbox" id="checkbox" className='cursor-pointer' />
                                     <label htmlFor="checkbox" className='flex gap-2 cursor-pointer text-black'>Remember me</label>
@@ -133,7 +141,7 @@ const Registation = () => {
                                 <div>
                                     <h4 className='text-right text-sm md:text-base my-2 text-[#6486FD] cursor-pointer'>Forgot Password</h4>
                                 </div>
-                            </div>
+                            </div> */}
                             <div className="px-[16%] flex gap-2">
                                 {
                                     error ? <p className='text-red-600'>{error}</p> : ''

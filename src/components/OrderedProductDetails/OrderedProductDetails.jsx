@@ -3,14 +3,7 @@ import useAxiosPublic from "../../hooks/useAxiosPublic";
 import Pagination from "../pagination/pagination";
 import { useState } from "react";
 
-const OrderedProductDetails = ({
-  products,
-  filteredUser,
-  currentPage,
-  setCurrentPage,
-  totalPages,
-  refetch,
-}) => {
+const OrderedProductDetails = ({ products, filteredUser, currentPage, setCurrentPage, totalPages, refetch }) => {
   const axiosPublic = useAxiosPublic();
   // console.log(products);
 
@@ -28,18 +21,19 @@ const OrderedProductDetails = ({
       }
     });
   };
-  const {
-    _id,
-    productCode,
-    name,
-    price,
-    quantity,
-    advancedAmount,
-    deliveryDate,
-    image,
-    status,
-  } = products || {};
+  // const {
+  //   _id,
+  //   productCode,
+  //   name,
+  //   price,
+  //   quantity,
+  //   advancedAmount,
+  //   deliveryDate,
+  //   image,
+  //   status,
+  // } = products || {};
   console.log();
+
   return (
     <div className="flex flex-col gap-4">
       <div className="overflow-x-auto">
@@ -86,7 +80,7 @@ const OrderedProductDetails = ({
                 </td>
                 {filteredUser?.role === "employee" ? (
                   <th>
-                    {product.length > -1 ? (
+                    {products?.items?.length === 0 ? (
                       "Not available"
                     ) : product?.status === "pending" ? (
                       <div>

@@ -114,14 +114,14 @@ const AddCategory = () => {
   };
   return (
     <>
-      <div className="lg:ml-10 overflow-scroll 2xl:h-[80vh] lg:h-[84vh] mx-3 lg:mx-0">
+      <div className="lg:ml-3 xl:ml-9 overflow-scroll 2xl:h-[80vh] lg:h-[85vh] mx-3 lg:mx-0">
         <div className="mb-2">
           <DashBoardTitle
             title={"Admin"}
             subTitle={"Add, Edit your category section in one click. "}
           />
         </div>
-        <div className="bg-white 2xl:h-[65vh]  rounded-lg px-1 py-3 md:p-3">
+        <div className="bg-white 2xl:h-[65vh] lg:h-[70vh] rounded-lg px-1 py-3 md:p-3">
           <SectionTitle title="Add Category" />
           <div className="flex flex-col md:justify-center items-center">
             <div className="md:w-4/6 w-full mx-auto mb-5">

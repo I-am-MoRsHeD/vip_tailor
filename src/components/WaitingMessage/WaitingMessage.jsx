@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 
 const WaitingMessage = () => {
     return (
-        <div className='flex justify-center items-center mt-28 mb-14 '>
+        <div className='flex justify-center items-center 4xl:h-[66.5vh] 4xl:mt-0 4xl:mb-0 md:mt-40 md:mb-20 mt-16 mb-5'>
             <div className='bg-[#F3F3F3] rounded px-10 py-14 text-center'>
                 <div className='flex justify-center items-center'>
                     <img src={img} className='w-36' alt="" />

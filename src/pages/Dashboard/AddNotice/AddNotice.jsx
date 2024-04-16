@@ -24,7 +24,7 @@ const AddNotice = () => {
         Swal.fire({
           position: "top-end",
           icon: "success",
-          title: "Order added successfully",
+          title: "Notice Publish Successfully",
           showConfirmButton: false,
           timer: 1000,
         });
@@ -40,7 +40,7 @@ const AddNotice = () => {
       exit={{ opacity: 0 }}
       transition={{ duration: 2 }}
       key="flex_046445"
-      className="pb-5 lg:ml-10 overflow-scroll h-[86vh] mx-3 lg:mx-0"
+      className="pb-5 lg:ml-3 xl:ml-9 overflow-scroll xl:h-[86vh] lg:h-[84.5vh] mx-3 lg:mx-0"
     >
       <DashBoardTitle
         title={"Admin"}

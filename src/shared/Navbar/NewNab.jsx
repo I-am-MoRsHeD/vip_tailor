@@ -149,7 +149,7 @@ const NewNav = () => {
       <li>
         <button
           onClick={() => setIsMenuOpen(false)}
-          className=" text-white md:text-black  text-2xl float-end font-semibold md:hidden"
+          className=" text-white text-2xl float-end font-semibold lg:hidden"
         >
           <IoIosCloseCircle />
         </button>
@@ -159,8 +159,8 @@ const NewNav = () => {
           to="/"
           className={({ isActive }) =>
             `${
-              isActive ? "active text-[#fff]" : "lg:text-[#fff] text-black"
-            } duration-300 text-base lg:text-lg font-semibold  transition navs`
+              isActive ? "active text-[#fff]" : "text-[#fff]"
+            }  transition navs duration-300 text-base lg:text-lg font-semibold `
           }
         >
           Home
@@ -170,7 +170,7 @@ const NewNav = () => {
       <li className="">
         <a
           onClick={(e) => handleAnchorClick(e, "featured")}
-          className="lg:text-[#fff] text-black duration-300 text-base lg:text-lg font-semibold transition navs cursor-pointer"
+          className="text-[#fff] duration-300 text-base lg:text-lg font-semibold transition navs cursor-pointer"
         >
           Featured Products
         </a>
@@ -178,7 +178,7 @@ const NewNav = () => {
       <li className="">
         <a
           onClick={(e) => handleAnchorClick(e, "notice")}
-          className="lg:text-[#fff] text-black duration-300 text-base lg:text-lg font-semibold  transition navs cursor-pointer"
+          className="text-[#fff] duration-300 text-base lg:text-lg font-semibold  transition navs cursor-pointer"
         >
           Notice Board
         </a>
@@ -189,8 +189,8 @@ const NewNav = () => {
           to="/contact"
           className={({ isActive }) =>
             `${
-              isActive ? "active text-[#fff]" : "lg:text-[#fff] text-black"
-            } duration-300 text-base lg:text-lg font-semibold md:mr-10 mr-0 transition navs mb-2 lg:mb-2`
+              isActive ? "active text-[#fff]" : "text-[#fff]"
+            } duration-300 text-base lg:text-lg font-semibold lg:mr-10 mr-0 transition navs mb-2 lg:mb-2`
           }
         >
           Contact Us
@@ -235,8 +235,8 @@ const NewNav = () => {
     >
       <div className="max-w-[1280px] w-full mx-auto">
         <div className="flex flex-row justify-between w-full">
-          <div className="flex items-center justify-center md:hidden">
-            <div className="md:hidden relative">
+          <div className="flex items-center justify-center lg:hidden">
+            <div className="lg:hidden relative">
               <div
                 tabIndex={0}
                 role="button"
@@ -259,11 +259,11 @@ const NewNav = () => {
                 </svg>
               </div>
               <ul
-                className={`text-white absolute top-0 left-0 right-0 w-[100vw]  transition-all duration-500 flex flex-col items-center text-center gap-5 hero-overlay ${
+                className={`text-white absolute md:-top-4 top-0 left-0 right-0 w-[100vw]  transition-all duration-500 flex flex-col items-center text-center gap-5 hero-overlay ${
                   isMenuOpen
                     ? "opacity-100 visible h-screen"
                     : "opacity-0 invisible h-0"
-                } bg-opacity-90 bg-black p-2 shadow`}
+                } bg-opacity-90 bg-black py-4 shadow`}
               >
                 {navlinks}
               </ul>
@@ -273,11 +273,11 @@ const NewNav = () => {
             </a>
           </div>
           <div className="my-auto">
-            <a className="text-white lg:text-[1.3rem] font-semibold hidden md:block text-center">
+            <a className="text-white lg:text-[1.3rem] font-semibold hidden lg:block text-center">
               VIP TAIRLORS
             </a>
           </div>
-          <div className="hidden md:block">
+          <div className="hidden lg:block">
             <ul className="hidden md:flex items-center gap-8">{navlinks}</ul>
           </div>
         </div>

@@ -13,7 +13,7 @@ import { Autoplay, Pagination, Navigation } from "swiper/modules";
 
 const Banner = () => {
   return (
-    <div id="banner" className="flex gap-5 md:mt-16 mt-[48px] lg:h-[90vh]">
+    <div id="banner" className="flex gap-5 md:mt-[63px] mt-[48px] lg:h-[90vh]">
       <Swiper
         spaceBetween={30}
         centeredSlides={true}

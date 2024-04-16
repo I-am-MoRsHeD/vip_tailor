@@ -4,8 +4,8 @@ import timg from "../../../assets/Group94.png";
 const EmployeeHome = () => {
   return (
     <div className="">
-      <div className="2xl:h-[80vh] lg:h-[85vh] h-auto bg-white mx-4 lg:mx-0 lg:ml-10 rounded-md">
-        <div className="flex flex-col-reverse lg:flex-col">
+      <div className="2xl:h-[80vh] lg:h-[85vh] md:h-[82vh] h-[80vh] bg-white mx-4 lg:mx-0 lg:ml-10 rounded-md">
+        <div className="flex flex-col-reverse items-center justify-center h-full lg:flex-col">
           <div className="flex justify-center items-center p-10">
             <SectionTitle
               title="Welcome to professional dashboard"

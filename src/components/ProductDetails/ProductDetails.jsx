@@ -15,9 +15,11 @@ import SectionTitle from "../SectionTitle/SectionTitle";
 import { GiCancel } from "react-icons/gi";
 import { FaSortAmountUpAlt } from "react-icons/fa";
 import { MdLocalMall } from "react-icons/md";
+import useAllProduct from "../../hooks/useAllProduct";
 // import rImg from "../../assets/Character.png";
 const ProductDetails = () => {
   const queryClient = useQueryClient();
+  const [allSellProducts] = useAllProduct();
   const [searchValue, setSearchValue] = useState("");
   const [axiosSecure] = useAxiosSecure();
   const axiosPublic = useAxiosPublic();
@@ -79,11 +81,12 @@ const ProductDetails = () => {
 
     const form = event.target;
     // console.log(form);
+    const categoryName = form.category.value;
     const sellData = {
       productName: form.name.value,
       price: parseInt(form.price.value) * parseInt(form.quantity.value),
       quantity: parseInt(form.quantity.value),
-      category: form.category.value,
+      category: categoryName.toLowerCase(),
       productCode: parseInt(form.code.value),
       sellingDate: new Date(),
       title: "cart",
@@ -210,11 +213,11 @@ const ProductDetails = () => {
 
   console.log(filterBySearch?.items);
 
-  const totalStock = filterBySearch?.items?.reduce(
+  const totalStock = allSellProducts?.reduce(
     (total, product) => total + product?.price * product?.quantity,
     0
   );
-  const totalQuantity = filterBySearch?.items?.reduce(
+  const totalQuantity = allSellProducts?.reduce(
     (total, product) => total + product?.quantity,
     0
   );
@@ -279,8 +282,8 @@ const ProductDetails = () => {
   }, []);
 
   return (
-    <div className="overflow-scroll 2xl:h-[80vh] lg:h-[85vh] mx-3 lg:mx-0">
-      <div className="lg:ml-10 rounded-md">
+    <div className="overflow-scroll 2xl:h-[80vh] lg:h-[84.5vh] mx-3 lg:mx-0">
+      <div className="lg:ml-3 xl:ml-9 rounded-md">
         {role === "admin" ? (
           <div className="grid lg:grid-cols-2 grid-cols-1 justify-between items-center my-2 rounded-md gap-2">
             <div className="bg-white p-2 md:p-5 rounded-md flex flex-col lg:justify-start lg:items-start  items-center justify-center gap-2">
@@ -450,7 +453,7 @@ const ProductDetails = () => {
 
       {openSell && (
         <div
-          className="fixed inset-0 z-10 flex items-center lg:ml-32 ml-1 justify-center bg-black bg-opacity-50"
+          className="fixed inset-0 z-10 flex items-center lg:ml-32 ml-1 justify-center bg-black bg-opacity-70"
           aria-labelledby="modal-title"
           role="dialog"
           aria-modal="true"
@@ -551,6 +554,7 @@ const ProductDetails = () => {
                       <option value="ready-Made">Ready-Made</option>
                     </select> */}
                     <select
+                      name="category"
                       // className="bg-white p-2 rounded-sm"
                       className="select select-bordered focus:outline-none w-full"
                       onChange={(e) => handleCategory(e.target.value)}
@@ -591,7 +595,7 @@ const ProductDetails = () => {
 
       {openModal && (
         <div
-          className="fixed inset-0 z-10 flex items-center pt-32 pb-14 lg:pt-0 lg:pb-0 lg:ml-32 justify-center bg-black bg-opacity-50"
+          className="fixed inset-0 z-10 flex items-center pt-32 pb-14 lg:pt-0 lg:pb-0 lg:ml-32 justify-center bg-black bg-opacity-70"
           aria-labelledby="modal-title"
           role="dialog"
           aria-modal="true"

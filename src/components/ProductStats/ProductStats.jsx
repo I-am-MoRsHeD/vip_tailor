@@ -3,7 +3,7 @@ import { BsCart3 } from 'react-icons/bs';
 import { IoBagOutline } from 'react-icons/io5';
 import { ReactToPrint } from 'react-to-print';
 
-const ProductStats = ({ totalSells, totalProduct, setCommentRef }) => {
+const ProductStats = ({ totalSells, totalProduct, setCommentRef, categories }) => {
     const componentRef = useRef(null);
     useEffect(() => {
         setCommentRef(componentRef);
@@ -38,7 +38,7 @@ const ProductStats = ({ totalSells, totalProduct, setCommentRef }) => {
                                 <h3 className='text-base font-semibold '>Total Sales Amount</h3>
                             </div>
                             <div>
-                                <h2 className='text-2xl font-bold '>{totalSells} BDT</h2>
+                                {categories?.length === 0 ? <h2 className='text-2xl font-bold '>0 BDT</h2> : <h2 className='text-2xl font-bold '>{totalSells} BDT</h2>}
                             </div>
                         </div>
                         <div className='w-full shadow-md rounded-md flex flex-col gap-2 p-5 bg-white'>
@@ -49,7 +49,7 @@ const ProductStats = ({ totalSells, totalProduct, setCommentRef }) => {
                                 <h3 className='text-base font-semibold '>Total Product Sold</h3>
                             </div>
                             <div>
-                                <h2 className='text-2xl font-bold '>{totalProduct}</h2>
+                                {categories?.length === 0 ?  <h2 className='text-2xl font-bold '>0</h2> : <h2 className='text-2xl font-bold '>{totalProduct}</h2>}
                             </div>
                         </div>
                     </div>

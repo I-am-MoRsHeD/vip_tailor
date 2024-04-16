@@ -25,58 +25,6 @@ const AddProduct = () => {
       return res.data;
     },
   });
-  // const onSubmit = (data) => {
-  //   // sending image to the imageBB
-  //   const imageFile = { image: data.image[0] };
-  //   axiosPublic
-  //     .post(image_hosing_api, imageFile, {
-  //       headers: {
-  //         "content-type": "multipart/form-data",
-  //       },
-  //     })
-  //     .then((res) => {
-  //       console.log(res.data);
-
-  //       // product data send to database
-  //       const productDetails = {
-  //         name: data?.name,
-  //         quantity: data?.quantity,
-  //         category: data?.category,
-  //         productCode: data?.code,
-  //         image: res?.data?.data?.display_url,
-  //         sellingDate: data?.date,
-  //         price: data?.price,
-  //         status: "pending",
-  //         email: user?.email,
-  //       };
-
-  //       // product added to the server
-  //       axiosPublic.post("/sellProduct", productDetails).then((res) => {
-  //         console.log(res);
-  //         if (res.data.message === "success") {
-  //           Swal.fire({
-  //             position: "top-end",
-  //             icon: "success",
-  //             title: "Product added successfully",
-  //             showConfirmButton: false,
-  //             timer: 1500,
-  //             imageUrl: "https://unsplash.it/400/200",
-  //             imageWidth: 400,
-  //             imageHeight: 200,
-  //             imageAlt: "Custom image",
-  //           });
-  //         } else {
-  //           Swal.fire({
-  //             position: "top-end",
-  //             icon: "error",
-  //             title: "Product Code has alredy been taken",
-  //             showConfirmButton: false,
-  //             timer: 1500,
-  //           });
-  //         }
-  //       });
-  //     });
-  // };
 
   const onSubmit = (data) => {
     // sending image to the imageBB if provided
@@ -154,10 +102,6 @@ const AddProduct = () => {
             title: "Product added successfully",
             showConfirmButton: false,
             timer: 1500,
-            imageUrl: "https://unsplash.it/400/200",
-            imageWidth: 400,
-            imageHeight: 200,
-            imageAlt: "Custom image",
           });
         } else {
           Swal.fire({
@@ -174,7 +118,7 @@ const AddProduct = () => {
 
   return (
     <>
-      <div className="lg:ml-10 overflow-scroll 2xl:h-[80vh] xl:h-[84vh] mx-3 lg:mx-0 rounded-lg">
+      <div className="lg:ml-3 xl:ml-9 overflow-scroll 2xl:h-[80vh] xl:h-[85vh] mx-3 lg:mx-0 rounded-lg">
         <div className="mb-2">
           <DashBoardTitle
             title={"Admin"}

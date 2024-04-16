@@ -128,7 +128,7 @@ const AdminDashboard = ({ isSideMenuOpen, toggleSideMenu }) => {
           className={({ isActive }) =>
             isActive
               ? "inline-flex items-center bg-[#DFF8FC] w-42 pl-2 pr-2 py-0 rounded font-bold text-[#3d48df] hover:text-blue-600 text-base"
-              : "inline-flex items-center font-bold pl-2 py-0 hover:text-blue-600 text-base"
+              : "inline-flex items-center font-semibold pl-2 py-0 hover:text-blue-600 text-base"
           }
           to="productStatement"
         >
@@ -250,7 +250,7 @@ const AdminDashboard = ({ isSideMenuOpen, toggleSideMenu }) => {
           <div className="">
             <Navbar2></Navbar2>
           </div>
-          <div className="4xl:ml-[25.5%] 4xl:mr-[200px] 3xl:ml-[26%] 3xl:mr-[10%] lg:h-[83vh] 2xl:ml-[29%] 2xl:mr-[12%] xl:ml-[22%] xl:mr-0 lg:ml-[285px] md:ml-4 md:mt-4 ml-0">
+          <div className="4xl:ml-[25.5%] 4xl:mr-[200px] 3xl:ml-[26%] 3xl:mr-[10%] lg:h-[83vh] 2xl:ml-[29%] 2xl:mr-[12%] xl:ml-[22%] xl:mr-0 lg:ml-[285px] mt-4">
             <Outlet></Outlet>
           </div>
         </main>

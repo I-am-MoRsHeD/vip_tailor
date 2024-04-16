@@ -38,40 +38,29 @@ const OrderedList = () => {
   });
   const role = userInfo?.role;
 
-  const {
-    data: orderBySearch = [],
-    refetch,
-    isLoading,
-  } = useQuery({
-    queryKey: [
-      "orderBySearch",
-      email,
-      role,
-      searchValue,
-      itemsPerPage,
-      currentPage,
-      status,
-    ],
+  const { data: orderBySearch = [], refetch, isLoading, } = useQuery({
+    queryKey: ["orderBySearch", email, role, searchValue, itemsPerPage, currentPage, status],
     cacheTime: 0,
     staleTime: 60000,
     queryFn: async () => {
       const res = await axiosPublic.get(
-        `/orderProduct/1/search?email=${email}&role=${role}&searchValue=${searchValue}&itemsPerPage=${itemsPerPage}&currentPage=${currentPage}&status=${status}`
+        `/orderProduct/1/search?email=${email}&searchValue=${searchValue}&itemsPerPage=${itemsPerPage}&currentPage=${currentPage}&status=${status}`
       );
       return res.data;
     },
   });
 
   // console.log(orderBySearch);
-  // useEffect(() => {
-  //   if (orderBySearch && orderBySearch.totalCount) {
-  //     setProductLength(orderBySearch.totalCount);
-  //     refetch();
-  //   } else {
-  //     setProductLength(0);
-  //     refetch();
-  //   }
-  // }, [orderBySearch]);
+  useEffect(() => {
+    if (orderBySearch && orderBySearch.totalCount) {
+      setProductLength(orderBySearch.totalCount);
+      refetch();
+    } else {
+      setProductLength(0);
+      refetch();
+    }
+  }, [orderBySearch]);
+
   useEffect(() => {
     refetch();
   }, [orderBySearch, currentPage, searchValue, status]);
@@ -79,9 +68,9 @@ const OrderedList = () => {
   // console.log(orderBySearch);
 
   return (
-    <div className="overflow-scroll 2xl:h-[80vh] lg:h-[85vh] mx-3 lg:mx-0">
+    <div className="overflow-scroll 2xl:h-[80vh] lg:h-[84.5vh] mx-3 lg:mx-0">
       {/* tabs */}
-      <div className="lg:ml-12 h-full">
+      <div className="lg:ml-3 xl:ml-9 h-full">
         <Tabs>
           {/* tab lists */}
           <TabList className="font-bold flex justify-center lg:gap-3 gap-2 mt-2 mb-4">
