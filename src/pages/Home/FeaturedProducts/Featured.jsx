@@ -51,7 +51,7 @@ const Featured = () => {
 
 
     return (
-        <div id='featured' className='supershop-container mx-auto '>
+        <div id='featured' className='max-w-[1280px] w-[86%] mx-auto py-10 md:py-12 lg:py-14'>
             <SectionTitle
                 title="Featured Products"
                 descrition="Welcome to Our Showcase Selections, Where Uniqueness Meets Quality."
