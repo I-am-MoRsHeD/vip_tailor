@@ -7,6 +7,20 @@ const OrderedProductDetails = ({ products, filteredUser, currentPage, setCurrent
   const axiosPublic = useAxiosPublic();
   // console.log(products);
 
+  const handleInHouse = async (product) => {
+    await axiosPublic.patch(`/orderProduct/1/${product?._id}`).then((res) => {
+      refetch();
+      if (res.data.message === "success") {
+        Swal.fire({
+          position: "top-end",
+          icon: "success",
+          title: "Order added successfully",
+          showConfirmButton: false,
+          timer: 1500,
+        });
+      }
+    });
+  };
   const handleComplete = async (product) => {
     await axiosPublic.patch(`/orderProduct/${product?._id}`).then((res) => {
       refetch();
@@ -80,21 +94,28 @@ const OrderedProductDetails = ({ products, filteredUser, currentPage, setCurrent
                 </td>
                 {filteredUser?.role === "employee" ? (
                   <th>
-                    {products?.items?.length === 0 ? (
-                      "Not available"
-                    ) : product?.status === "pending" ? (
+
+                    {product?.status === 'pending' ? (
                       <div>
                         <h1 className="text-xs font-bold">Pending</h1>
+                        <button
+                          onClick={() => handleInHouse(product)}
+                          className="btn btn-xs btn-accent"
+                        >
+                          In House
+                        </button>
+                      </div>
+                    ) :
+                      product?.status == 'inHouse' ? <div>
+                        <h1 className="text-xs font-bold">In House</h1>
                         <button
                           onClick={() => handleComplete(product)}
                           className="btn btn-xs btn-accent"
                         >
                           Complete
                         </button>
-                      </div>
-                    ) : (
-                      <h1 className="text-xs font-bold">Paid</h1>
-                    )}
+                      </div> : 
+                        (<h1 className="text-xs font-bold">Paid</h1>)}
                   </th>
                 ) : (
                   ""
@@ -109,8 +130,29 @@ const OrderedProductDetails = ({ products, filteredUser, currentPage, setCurrent
         totalPages={totalPages}
         setCurrentPage={setCurrentPage}
       />
-    </div>
+    </div >
   );
 };
 
 export default OrderedProductDetails;
+
+
+
+
+{/* {products?.items?.length === 0 ? (
+                      "Not available"
+                    ) : (
+                      product?.status === "pending" ? (
+                        <div>
+                          <h1 className="text-xs font-bold">Pending</h1>
+                          <button
+                            onClick={() => handleComplete(product)}
+                            className="btn btn-xs btn-accent"
+                          >
+                            Complete
+                          </button>
+                        </div>
+                      ) : (
+                        <h1 className="text-xs font-bold">Paid</h1>
+                      ))} */}
+

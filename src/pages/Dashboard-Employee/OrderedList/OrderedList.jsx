@@ -84,6 +84,13 @@ const OrderedList = () => {
             <Tab
               className="border-none bg-white lg:py-5 lg:px-14 py-3 px-10 rounded-md cursor-pointer"
               selectedClassName="selected-tab bg-yellow-950 text-white lg:py-5 lg:px-14 py-3 px-10"
+              onClick={() => handleStatus("inHouse")}
+            >
+              In House
+            </Tab>
+            <Tab
+              className="border-none bg-white lg:py-5 lg:px-14 py-3 px-10 rounded-md cursor-pointer"
+              selectedClassName="selected-tab bg-yellow-950 text-white lg:py-5 lg:px-14 py-3 px-10"
               onClick={() => handleStatus("completed")}
             >
               Completed
@@ -101,6 +108,18 @@ const OrderedList = () => {
             </div>
             {/* tab panel */}
             <div className="my-5 rounded-lg">
+              <TabPanel>
+                <div className="flex flex-col px-5 gap-4">
+                  <OrderedProductDetails
+                    products={orderBySearch}
+                    filteredUser={userInfo}
+                    currentPage={currentPage}
+                    setCurrentPage={setCurrentPage}
+                    totalPages={totalPages}
+                    refetch={refetch}
+                  />
+                </div>
+              </TabPanel>
               <TabPanel>
                 <div className="flex flex-col px-5 gap-4">
                   <OrderedProductDetails
