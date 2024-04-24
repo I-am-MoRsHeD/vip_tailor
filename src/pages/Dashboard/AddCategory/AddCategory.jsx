@@ -50,7 +50,6 @@ const AddCategory = () => {
       }
     });
   };
-
   const handleDelete = (categoryId) => {
     Swal.fire({
       title: "Are you sure?",
@@ -90,27 +89,21 @@ const AddCategory = () => {
     const updatedCategory = {
       category,
     };
-
-    fetch(`http://localhost:5000/category/${cData._id}`, {
-      method: "PUT",
-      headers: {
-        "content-type": "application/json",
-      },
-      body: JSON.stringify(updatedCategory),
-    })
-      .then((res) => res.json())
-      .then((data) => {
-        // console.log(data);
+    try {
+      const res = await axios.put(`/category/${cData._id}`, updatedCategory);
+      if (res.status === 200) {
+        Swal.fire({
+          title: "Category Update!",
+          text: "Your request accepted.",
+          icon: "success",
+        });
         setOpenModal(false);
         refetch();
-        Swal.fire({
-          position: "top-end",
-          icon: "success",
-          title: "Update Product details",
-          showConfirmButton: false,
-          timer: 1000,
-        });
-      });
+      }
+      refetch();
+    } catch (err) {
+      console.log(err);
+    }
   };
   return (
     <>

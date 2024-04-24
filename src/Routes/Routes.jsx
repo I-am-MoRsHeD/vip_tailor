@@ -22,6 +22,7 @@ import ProductDetails from "../components/ProductDetails/ProductDetails.jsx";
 import AddCategory from "../pages/Dashboard/AddCategory/AddCategory.jsx";
 import AddToCart from "../pages/Dashboard/AddToCart/AddToCart.jsx";
 import WaitingMessage from "../components/WaitingMessage/WaitingMessage.jsx";
+import ForgetPass from "../pages/Home/Login/ForgetPass.jsx";
 
 const router = createBrowserRouter([
   {
@@ -44,6 +45,10 @@ const router = createBrowserRouter([
       {
         path: "/login",
         element: <Login></Login>,
+      },
+      {
+        path: "/forgetpassword",
+        element: <ForgetPass />,
       },
       {
         path: "/register",
