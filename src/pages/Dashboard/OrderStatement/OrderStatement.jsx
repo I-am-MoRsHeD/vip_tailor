@@ -10,7 +10,7 @@ import DashBoardTitle from '../../../components/dashboardTitle/DashBoardTitle';
 const OrderStatement = () => {
     const [orderProducts, refetch, currentPage, totalPages, setCurrentPage] = useOrderedProduct();
     const axiosPublic = useAxiosPublic();
-
+    console.log(orderProducts)
 
     const handleDelete = (product) => {
         Swal.fire({
@@ -26,15 +26,14 @@ const OrderStatement = () => {
                 axiosPublic.delete(`/orderProduct/${product?._id}`)
                     .then(res => {
                         console.log(res)
-                        refetch();
                         if (res.status === 200) {
-                            refetch();
                             Swal.fire({
                                 title: "Deleted!",
                                 text: "Order Statement has been deleted..!",
                                 icon: "success"
                             });
                         }
+                        refetch();
                     })
             }
         });

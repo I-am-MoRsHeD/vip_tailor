@@ -24,18 +24,17 @@ const ProductStatement = () => {
             confirmButtonText: "Yes, delete it!"
         }).then((result) => {
             if (result.isConfirmed) {
-                axiosPublic.delete(`/sellProduct/${product?._id}`)
+                axiosPublic.delete(`/soldItems/${product?._id}`)
                     .then(res => {
-                        console.log(res)
-                        refetch();
+                        // console.log(res)
                         if (res.status === 200) {
-                            refetch();
                             Swal.fire({
                                 title: "Deleted!",
                                 text: "Product Statement has been deleted..!",
                                 icon: "success"
                             });
                         }
+                        refetch();
                     })
             }
         });

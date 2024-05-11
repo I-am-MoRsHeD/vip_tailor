@@ -46,7 +46,6 @@ const Home = () => {
           <div key={loggedUser._id}>
             {loggedUser.role === "employee" ? (
               <div>
-                {/* <Navbar2 className="mb-2"/> */}
                 <EmployeeDashboard
                   isSideMenuOpen={isSideMenuOpen}
                   toggleSideMenu={toggleSideMenu}
@@ -55,7 +54,6 @@ const Home = () => {
               </div>
             ) : loggedUser.role === "admin" ? (
               <div>
-                {/* <Navbar2 /> */}
                 <AdminDashboard
                   isSideMenuOpen={isSideMenuOpen}
                   toggleSideMenu={toggleSideMenu}

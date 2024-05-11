@@ -7,6 +7,8 @@ import useAuth from "../../../hooks/useAuth";
 import useAxiosPublic from "../../../hooks/useAxiosPublic";
 import { useQuery } from "@tanstack/react-query";
 import useAxiosSecure from "../../../hooks/useAxiosSecure";
+import { FaSortAmountUpAlt } from "react-icons/fa";
+import { MdLocalMall } from "react-icons/md";
 
 const OrderedList = () => {
   const [searchValue, setSearchValue] = useState("");
@@ -16,7 +18,7 @@ const OrderedList = () => {
 
   const handleStatus = (set) => {
     setStatus(set);
-    console.log(set);
+    // console.log(set);
   };
 
   const [productLength, setProductLength] = useState(0);
@@ -38,8 +40,20 @@ const OrderedList = () => {
   });
   const role = userInfo?.role;
 
-  const { data: orderBySearch = [], refetch, isLoading, } = useQuery({
-    queryKey: ["orderBySearch", email, role, searchValue, itemsPerPage, currentPage, status],
+  const {
+    data: orderBySearch = [],
+    refetch,
+    isLoading,
+  } = useQuery({
+    queryKey: [
+      "orderBySearch",
+      email,
+      role,
+      searchValue,
+      itemsPerPage,
+      currentPage,
+      status,
+    ],
     cacheTime: 0,
     staleTime: 60000,
     queryFn: async () => {
@@ -71,6 +85,26 @@ const OrderedList = () => {
     <div className="overflow-scroll 2xl:h-[80vh] lg:h-[84.5vh] mx-3 lg:mx-0">
       {/* tabs */}
       <div className="lg:ml-3 xl:ml-9 h-full">
+        <div className="grid lg:grid-cols-2 grid-cols-1 justify-between items-center my-2 rounded-md gap-2">
+          <div className="bg-white p-2 md:p-5 rounded-md flex flex-col lg:justify-start lg:items-start  items-center justify-center gap-2">
+            <h1 className="text-xs md:text-sm font-semibold flex items-center justify-start gap-1">
+              <span>
+                <FaSortAmountUpAlt />
+              </span>
+              Total Product Amount
+            </h1>
+            <h1 className="font-semibold text-xl md:text-2xl">1000 BDT</h1>
+          </div>
+          <div className="bg-white p-2 md:p-5 rounded-md flex flex-col lg:justify-start lg:items-start  items-center justify-center gap-2 ">
+            <h1 className="text-xs md:text-sm font-semibold flex items-center justify-start">
+              <span>
+                <MdLocalMall />
+              </span>
+              Total Quantity
+            </h1>
+            <h1 className="font-semibold text-xl md:text-2xl">1000</h1>
+          </div>
+        </div>
         <Tabs>
           {/* tab lists */}
           <TabList className="font-bold flex justify-center lg:gap-3 gap-2 mt-2 mb-4">
@@ -81,6 +115,13 @@ const OrderedList = () => {
             >
               Pending
             </Tab>
+            {/* <Tab
+              className="border-none bg-white lg:py-5 lg:px-14 py-3 px-10 rounded-md cursor-pointer"
+              selectedClassName="selected-tab bg-yellow-950 text-white lg:py-5 lg:px-14 py-3 px-10"
+              onClick={() => handleStatus("inHouse")}
+            >
+              In House
+            </Tab> */}
             <Tab
               className="border-none bg-white lg:py-5 lg:px-14 py-3 px-10 rounded-md cursor-pointer"
               selectedClassName="selected-tab bg-yellow-950 text-white lg:py-5 lg:px-14 py-3 px-10"
@@ -95,7 +136,7 @@ const OrderedList = () => {
               <input
                 onChange={(e) => setSearchValue(e.target.value)}
                 type="text"
-                placeholder="Search by Product Code"
+                placeholder="Search by Invoice No"
                 className="input bg-gray-100 focus:outline-none"
               />
             </div>
@@ -113,6 +154,18 @@ const OrderedList = () => {
                   />
                 </div>
               </TabPanel>
+              {/* <TabPanel>
+                <div className="flex flex-col px-5 gap-4">
+                  <OrderedProductDetails
+                    products={orderBySearch}
+                    filteredUser={userInfo}
+                    currentPage={currentPage}
+                    setCurrentPage={setCurrentPage}
+                    totalPages={totalPages}
+                    refetch={refetch}
+                  />
+                </div>
+              </TabPanel> */}
               <TabPanel>
                 <div className="flex flex-col px-5 gap-4">
                   <OrderedProductDetails

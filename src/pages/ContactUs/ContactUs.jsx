@@ -17,10 +17,10 @@ const Contact = () => {
     e.preventDefault();
 
     emailjs.sendForm(
-      'service_ktexr9w',
-      'template_33npnkp',
+      'service_dxn2onr',
+      'template_e98njye',
       form.current,
-      'B8T8yiI5aCfiQrANA')
+      'z1bY8W4MVJUDUn_eK')
       .then((result) => {
         console.log(result.text);
         Swal.fire({

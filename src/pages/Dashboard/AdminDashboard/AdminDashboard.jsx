@@ -23,6 +23,8 @@ import useAuth from "../../../hooks/useAuth";
 import Swal from "sweetalert2";
 import { CiViewList } from "react-icons/ci";
 import { ImStatsDots } from "react-icons/im";
+import { RiFileList3Line } from "react-icons/ri";
+import { BiBarChart } from "react-icons/bi";
 
 const AdminDashboard = ({ isSideMenuOpen, toggleSideMenu }) => {
   const { logOut } = useAuth();
@@ -77,10 +79,10 @@ const AdminDashboard = ({ isSideMenuOpen, toggleSideMenu }) => {
               ? "inline-flex items-center bg-[#DFF8FC] w-48 pl-2 pr-2 py-0 rounded font-bold text-[#3d48df] hover:text-blue-600 text-base"
               : "inline-flex items-center font-semibold pl-2 py-0 hover:text-blue-600 text-base"
           }
-          to="addProduct"
+          to="addcategory"
         >
-          <MdOutlineAddChart />
-          <span className="ml-4">Add Product</span>
+          <MdOutlineAddCircleOutline />
+          <span className="ml-4">Add Category</span>
         </NavLink>
       </li>
       <li className="relative px-2 py-0">
@@ -91,10 +93,10 @@ const AdminDashboard = ({ isSideMenuOpen, toggleSideMenu }) => {
               ? "inline-flex items-center bg-[#DFF8FC] w-48 pl-2 pr-2 py-0 rounded font-bold text-[#3d48df] hover:text-blue-600 text-base"
               : "inline-flex items-center font-semibold pl-2 py-0 hover:text-blue-600 text-base"
           }
-          to="addcategory"
+          to="addProduct"
         >
-          <MdOutlineAddCircleOutline />
-          <span className="ml-4">Add Category</span>
+          <MdOutlineAddChart />
+          <span className="ml-4">Add Product</span>
         </NavLink>
       </li>
       <li className="relative px-2 py-0 ">
@@ -108,6 +110,35 @@ const AdminDashboard = ({ isSideMenuOpen, toggleSideMenu }) => {
         >
           <CiViewList />
           <span className="ml-4">Product List</span>
+        </NavLink>
+      </li>
+      <li className="relative px-2 py-1 ">
+        <NavLink
+          className={({ isActive }) =>
+            isActive
+              ? "inline-flex items-center bg-[#DFF8FC] w-48 pl-2 pr-2 py-1 rounded font-bold text-[#3d48df] hover:text-blue-600 text-base"
+              : "inline-flex items-center font-semibold pl-2 py-1 hover:text-blue-600 text-base"
+          }
+          to="addToCart"
+        >
+          <RiFileList3Line />
+          <span className="ml-4">
+            Sell List
+            {/* <span className="text-red-500">({carts?.length})</span> */}
+          </span>
+        </NavLink>
+      </li>
+      <li className="relative px-2 py-1 ">
+        <NavLink
+          className={({ isActive }) =>
+            isActive
+              ? "inline-flex items-center bg-[#DFF8FC] w-48 pl-2 pr-2 py-1 rounded font-bold text-[#3d48df] hover:text-blue-600 text-base"
+              : "inline-flex items-center font-semibold pl-2 py-1 hover:text-blue-600 text-base"
+          }
+          to="ordered"
+        >
+          <IoBagAddOutline />
+          <span className="ml-4">Ordered Product</span>
         </NavLink>
       </li>
       <li className="relative px-2 py-0 ">
@@ -175,6 +206,33 @@ const AdminDashboard = ({ isSideMenuOpen, toggleSideMenu }) => {
           <span className="ml-4">All Members</span>
         </NavLink>
       </li>
+      {/* <li className="relative px-2 py-1 ">
+        <NavLink
+          className={({ isActive }) =>
+            isActive
+              ? "inline-flex items-center bg-[#DFF8FC] w-48 pl-2 pr-2 py-1 rounded font-bold text-[#3d48df] hover:text-blue-600 text-base"
+              : "inline-flex items-center font-semibold pl-2 py-1 hover:text-blue-600 text-base"
+          }
+          to="productList"
+        >
+          <CiViewList />
+          <span className="ml-4">Product List</span>
+        </NavLink>
+      </li> */}
+
+      {/* <li className="relative px-2 py-1 ">
+        <NavLink
+          className={({ isActive }) =>
+            isActive
+              ? "inline-flex items-center bg-[#DFF8FC] w-48 pl-2 pr-2 py-1 rounded font-bold text-[#3d48df] hover:text-blue-600 text-base"
+              : "inline-flex items-center font-semibold pl-2 py-1 hover:text-blue-600 text-base"
+          }
+          to="orderedList"
+        >
+          <BiBarChart />
+          <span className="ml-4">Ordered List</span>
+        </NavLink>
+      </li> */}
     </>
   );
   return (

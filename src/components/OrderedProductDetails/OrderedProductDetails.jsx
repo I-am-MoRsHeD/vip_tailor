@@ -3,10 +3,31 @@ import useAxiosPublic from "../../hooks/useAxiosPublic";
 import Pagination from "../pagination/pagination";
 import { useState } from "react";
 
-const OrderedProductDetails = ({ products, filteredUser, currentPage, setCurrentPage, totalPages, refetch }) => {
+const OrderedProductDetails = ({
+  products,
+  filteredUser,
+  currentPage,
+  setCurrentPage,
+  totalPages,
+  refetch,
+}) => {
   const axiosPublic = useAxiosPublic();
   // console.log(products);
 
+  // const handleInHouse = async (product) => {
+  //   await axiosPublic.patch(`/orderProduct/1/${product?._id}`).then((res) => {
+  //     refetch();
+  //     if (res.data.message === "success") {
+  //       Swal.fire({
+  //         position: "top-end",
+  //         icon: "success",
+  //         title: "Order added successfully",
+  //         showConfirmButton: false,
+  //         timer: 1500,
+  //       });
+  //     }
+  //   });
+  // };
   const handleComplete = async (product) => {
     await axiosPublic.patch(`/orderProduct/${product?._id}`).then((res) => {
       refetch();
@@ -41,7 +62,7 @@ const OrderedProductDetails = ({ products, filteredUser, currentPage, setCurrent
           {/* head */}
           <thead>
             <tr className="text-black border-b-[1.5px] border-black">
-              <th className="p-1">Product Code</th>
+              <th className="p-1">Invoice No</th>
               <th>Product Name</th>
               <th>Price</th>
               <th>Quantity</th>
@@ -54,7 +75,7 @@ const OrderedProductDetails = ({ products, filteredUser, currentPage, setCurrent
 
               <th>Delivery Date</th>
               <th>Image</th>
-              {filteredUser?.role === "employee" && <th>Status</th>}
+              <th>Status</th>
             </tr>
           </thead>
           <tbody>
@@ -78,27 +99,21 @@ const OrderedProductDetails = ({ products, filteredUser, currentPage, setCurrent
                 <td>
                   <img className="w-10 h-10" src={product?.image} alt="" />
                 </td>
-                {filteredUser?.role === "employee" ? (
-                  <th>
-                    {products?.items?.length === 0 ? (
-                      "Not available"
-                    ) : product?.status === "pending" ? (
-                      <div>
-                        <h1 className="text-xs font-bold">Pending</h1>
-                        <button
-                          onClick={() => handleComplete(product)}
-                          className="btn btn-xs btn-accent"
-                        >
-                          Complete
-                        </button>
-                      </div>
-                    ) : (
-                      <h1 className="text-xs font-bold">Paid</h1>
-                    )}
-                  </th>
-                ) : (
-                  ""
-                )}
+                <th>
+                  {product?.status === "pending" ? (
+                    <div>
+                      <h1 className="text-xs font-bold">Pending</h1>
+                      <button
+                        onClick={() => handleComplete(product)}
+                        className="btn btn-xs btn-accent"
+                      >
+                        Complete
+                      </button>
+                    </div>
+                  ) : (
+                    <h1 className="text-xs font-bold">Paid</h1>
+                  )}
+                </th>
               </tr>
             ))}
           </tbody>
@@ -114,3 +129,22 @@ const OrderedProductDetails = ({ products, filteredUser, currentPage, setCurrent
 };
 
 export default OrderedProductDetails;
+
+{
+  /* {products?.items?.length === 0 ? (
+                      "Not available"
+                    ) : (
+                      product?.status === "pending" ? (
+                        <div>
+                          <h1 className="text-xs font-bold">Pending</h1>
+                          <button
+                            onClick={() => handleComplete(product)}
+                            className="btn btn-xs btn-accent"
+                          >
+                            Complete
+                          </button>
+                        </div>
+                      ) : (
+                        <h1 className="text-xs font-bold">Paid</h1>
+                      ))} */
+}
