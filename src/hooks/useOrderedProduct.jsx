@@ -6,7 +6,7 @@ import useAxiosSecure from "./useAxiosSecure";
 
 const useOrderedProduct = () => {
   const axiosPublic = useAxiosPublic();
-  const [axiosSecure] = useAxiosSecure();
+  const axiosSecure = useAxiosSecure();
   // Pagination
   const [productLength, setProductLength] = useState(0);
   const [currentPage, setCurrentPage] = useState(0);

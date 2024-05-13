@@ -1,42 +1,26 @@
 import axios from "axios";
-import { useContext, useEffect } from "react";
-import { AuthContext } from "../components/AuthProvider/AuthProvider";
-import { useNavigate } from "react-router-dom";
-
-const axiosSecure = axios.create({
-  // baseURL: 'http://localhost:5000'
+import { signOut } from "firebase/auth";
+const instance = axios.create({
+  //   baseURL: "",
   baseURL: "http://localhost:5000",
+  withCredentials: true,
 });
 
 const useAxiosSecure = () => {
-  const { logOut } = useContext(AuthContext);
-  const navigate = useNavigate();
-
-  useEffect(() => {
-    axiosSecure.interceptors.request.use((config) => {
-      const token = localStorage.getItem("access-token");
-      if (token) {
-        config.headers.Authorization = `Bearer ${token}`;
+  instance.interceptors.response.use(
+    function (response) {
+      return response;
+    },
+    async (error) => {
+      const status = error.response?.status;
+      if (status === 401 || status === 403) {
+        await signOut(auth);
       }
-      return config;
-    });
+      return Promise.reject(error);
+    }
+  );
 
-    axiosSecure.interceptors.response.use(
-      (response) => response,
-      async (error) => {
-        if (
-          error.response &&
-          (error.response.status === 401 || error.response.status === 403)
-        ) {
-          await logOut();
-          navigate("/");
-        }
-        return Promise.reject(error);
-      }
-    );
-  }, [logOut, navigate, axiosSecure]);
-
-  return [axiosSecure];
+  return instance;
 };
 
 export default useAxiosSecure;

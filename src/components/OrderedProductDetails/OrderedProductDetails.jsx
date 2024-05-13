@@ -1,7 +1,8 @@
 import Swal from "sweetalert2";
 import useAxiosPublic from "../../hooks/useAxiosPublic";
 import Pagination from "../pagination/pagination";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import OrderCompleteModal from "./OrderCompleteModal";
 
 const OrderedProductDetails = ({
   products,
@@ -12,48 +13,29 @@ const OrderedProductDetails = ({
   refetch,
 }) => {
   const axiosPublic = useAxiosPublic();
-  // console.log(products);
-
-  // const handleInHouse = async (product) => {
-  //   await axiosPublic.patch(`/orderProduct/1/${product?._id}`).then((res) => {
-  //     refetch();
-  //     if (res.data.message === "success") {
-  //       Swal.fire({
-  //         position: "top-end",
-  //         icon: "success",
-  //         title: "Order added successfully",
-  //         showConfirmButton: false,
-  //         timer: 1500,
-  //       });
-  //     }
-  //   });
-  // };
-  const handleComplete = async (product) => {
-    await axiosPublic.patch(`/orderProduct/${product?._id}`).then((res) => {
-      refetch();
-      if (res.data.message === "success") {
-        Swal.fire({
-          position: "top-end",
-          icon: "success",
-          title: "Order added successfully",
-          showConfirmButton: false,
-          timer: 1500,
-        });
-      }
-    });
+  const [openModal, setOpenModal] = useState(false);
+  const [selectedData, setSelectedData] = useState(null);
+  const handleCompleteModal = (product) => {
+    // console.log(product);
+    setSelectedData(product);
+    setOpenModal(true);
   };
-  // const {
-  //   _id,
-  //   productCode,
-  //   name,
-  //   price,
-  //   quantity,
-  //   advancedAmount,
-  //   deliveryDate,
-  //   image,
-  //   status,
-  // } = products || {};
-  console.log();
+
+  const handleCloseModal = () => {
+    setOpenModal(false);
+  };
+  // console.log(products);
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        await refetchData();
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      }
+    };
+
+    fetchData();
+  }, []); // This will run once when the component mounts
 
   return (
     <div className="flex flex-col gap-4">
@@ -81,10 +63,22 @@ const OrderedProductDetails = ({
           <tbody>
             {products?.items?.map((product, ind) => (
               <tr key={product?._id} className="border-b-[1.5px] border-black">
-                <td className="p-1">{product?.productCode}</td>
-                <td>{product?.name}</td>
-                <td className="whitespace-nowrap">BDT {product?.price}</td>
-                <td>{product?.quantity}</td>
+                <td className="p-1">{product?.invoiceNo}</td>
+                <td>
+                  {product?.products.map((dd, id) => (
+                    <h1 key={dd?._id}>{dd?.name}</h1>
+                  ))}
+                </td>
+                <td className="whitespace-nowrap">
+                  {product?.products.map((dd, id) => (
+                    <h1 key={dd?._id}> BDT {dd?.price}</h1>
+                  ))}
+                </td>
+                <td>
+                  {product?.products.map((dd, id) => (
+                    <h1 key={dd?._id}>{dd?.quantity}</h1>
+                  ))}
+                </td>
                 {product.status === "pending" && (
                   <>
                     <td>{product?.advancedAmount}</td>
@@ -104,7 +98,8 @@ const OrderedProductDetails = ({
                     <div>
                       <h1 className="text-xs font-bold">Pending</h1>
                       <button
-                        onClick={() => handleComplete(product)}
+                        onClick={() => handleCompleteModal(product)}
+                        // onClick={() => handleComplete(product)}
                         className="btn btn-xs btn-accent"
                       >
                         Complete
@@ -124,27 +119,16 @@ const OrderedProductDetails = ({
         totalPages={totalPages}
         setCurrentPage={setCurrentPage}
       />
+      {openModal && (
+        <OrderCompleteModal
+          data={selectedData}
+          onClose={handleCloseModal}
+          refetchData={refetch}
+          complete={handleCompleteModal}
+        />
+      )}
     </div>
   );
 };
 
 export default OrderedProductDetails;
-
-{
-  /* {products?.items?.length === 0 ? (
-                      "Not available"
-                    ) : (
-                      product?.status === "pending" ? (
-                        <div>
-                          <h1 className="text-xs font-bold">Pending</h1>
-                          <button
-                            onClick={() => handleComplete(product)}
-                            className="btn btn-xs btn-accent"
-                          >
-                            Complete
-                          </button>
-                        </div>
-                      ) : (
-                        <h1 className="text-xs font-bold">Paid</h1>
-                      ))} */
-}

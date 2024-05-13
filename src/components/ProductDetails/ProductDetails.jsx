@@ -21,7 +21,7 @@ const ProductDetails = () => {
   const queryClient = useQueryClient();
   const [allSellProducts] = useAllProduct();
   const [searchValue, setSearchValue] = useState("");
-  const [axiosSecure] = useAxiosSecure();
+  const axiosSecure = useAxiosSecure();
   const axiosPublic = useAxiosPublic();
   const [openModal, setOpenModal] = useState(false);
   const [openSell, setSellModal] = useState(false);
@@ -33,9 +33,7 @@ const ProductDetails = () => {
   const itemsPerPage = 20;
   const { user } = useAuth();
   const email = user?.email;
-  // const { register, handleSubmit, reset } = useForm();
 
-  const [loggedUser, setLoggedUser] = useState();
   const [users] = useUser();
   const [carts, remaining] = useCarts();
 
@@ -46,13 +44,6 @@ const ProductDetails = () => {
       return res.data;
     },
   });
-
-  useEffect(() => {
-    if (user && users) {
-      const filteredUser = users.find((us) => us.email === user.email);
-      setLoggedUser(filteredUser);
-    }
-  }, [users, user]);
 
   const handleEdit = async (id) => {
     setId(id);
@@ -93,7 +84,7 @@ const ProductDetails = () => {
       email,
     };
     const quantity1 = parseInt(form.quantity.value);
-    console.log(quantity1);
+    // console.log(quantity1);
     if (quantity1 > sell?.quantity) {
       Swal.fire({
         position: "top-end",
@@ -218,7 +209,7 @@ const ProductDetails = () => {
     }
   }, [filterBySearch]);
 
-  console.log(filterBySearch?.items);
+  // console.log(filterBySearch?.items);
 
   const totalStock = allSellProducts?.reduce(
     (total, product) => total + product?.price * product?.quantity,
@@ -331,123 +322,64 @@ const ProductDetails = () => {
             />
           </div>
           <div className="flex flex-col gap-4">
-            <div key={loggedUser?._id}>
-              {loggedUser?.role === "employee" ? (
-                <div className="overflow-x-auto p-3">
-                  <table className="table">
-                    <thead>
-                      <tr className=" text-black  border-b-[1.2px] border-black">
-                        <th>#</th>
-                        <th>Product Code</th>
-                        <th>Product Name</th>
-                        <th>Price</th>
-                        <th>Quantity</th>
-                        <th>Date</th>
-                        <th>Image</th>
-                        <th>Action</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      {filterBySearch?.items?.map((product, ind) => (
-                        <tr
-                          key={product?._id}
-                          className=" border-b-[1.2px] border-black"
+            <div className="overflow-x-auto">
+              <table className="table">
+                <thead>
+                  <tr className=" text-black border-b-[1.2px] border-black">
+                    <th className="p-1">#</th>
+                    <th>Product Code</th>
+                    <th>Product Name</th>
+                    <th>Price</th>
+                    <th>Quantity</th>
+                    <th>Date</th>
+                    <th>Image</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {filterBySearch?.items?.map((product, ind) => (
+                    <tr
+                      className="border-b-[1.2px] border-black"
+                      key={product?._id}
+                    >
+                      <td className="p-1">{ind + 1}</td>
+                      <td>{product?.productCode}</td>
+                      <td>{product?.name}</td>
+                      <td>BDT {product?.price}</td>
+                      <td>{product?.quantity}</td>
+                      <td>
+                        {new Date(product?.sellingDate).toLocaleDateString()}
+                      </td>
+                      <td>
+                        <img
+                          className="w-10 h-10"
+                          src={product?.image}
+                          alt=""
+                        />
+                      </td>
+                      <td className="flex gap-2">
+                        <button onClick={() => handleEdit(product?._id)}>
+                          <spam className="lg:px-6 px-3 lg:py-3 py-1 md:mr-4 rounded-md bg-gray-100 hover:bg-gray-200 font-semibold">
+                            Add
+                          </spam>
+                        </button>
+                        <button
+                          onClick={() => editSaller(product?._id)}
+                          className="btn btn-ghost btn-sm bg-gray-300"
                         >
-                          <td>{ind + 1}</td>
-                          <td>{product?.productCode}</td>
-                          <td>{product?.name}</td>
-                          <td>BDT {product?.price}</td>
-                          <td>{product?.quantity}</td>
-                          <td>
-                            {new Date(
-                              product?.sellingDate
-                            ).toLocaleDateString()}
-                          </td>
-                          <td>
-                            <img
-                              className="w-10 h-10"
-                              src={product?.image}
-                              alt=""
-                            />
-                          </td>
-                          <td className="flex gap-2 mt-2">
-                            <button onClick={() => handleEdit(product?._id)}>
-                              <spam className="lg:px-6 px-3 lg:py-3 py-1 md:mr-4 rounded-md bg-gray-100 hover:bg-gray-200 font-semibold">
-                                Add
-                              </spam>
-                            </button>
-                            {/* <button
+                          <MdOutlineEdit className="text-xl" />
+                        </button>
+                        <button
                           onClick={() => handleDelete(product)}
                           className="btn btn-ghost btn-sm bg-gray-300"
                         >
                           <MdOutlineDeleteOutline className="text-xl" />
-                        </button> */}
-                          </td>
-                        </tr>
-                      ))}
-                    </tbody>
-                  </table>
-                </div>
-              ) : loggedUser?.role === "admin" ? (
-                <div className="overflow-x-auto">
-                  <table className="table">
-                    <thead>
-                      <tr className=" text-black border-b-[1.2px] border-black">
-                        <th className="p-1">#</th>
-                        <th>Product Code</th>
-                        <th>Product Name</th>
-                        <th>Price</th>
-                        <th>Quantity</th>
-                        <th>Date</th>
-                        <th>Image</th>
-                        <th>Action</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      {filterBySearch?.items?.map((product, ind) => (
-                        <tr
-                          className="border-b-[1.2px] border-black"
-                          key={product?._id}
-                        >
-                          <td className="p-1">{ind + 1}</td>
-                          <td>{product?.productCode}</td>
-                          <td>{product?.name}</td>
-                          <td>BDT {product?.price}</td>
-                          <td>{product?.quantity}</td>
-                          <td>
-                            {new Date(
-                              product?.sellingDate
-                            ).toLocaleDateString()}
-                          </td>
-                          <td>
-                            <img
-                              className="w-10 h-10"
-                              src={product?.image}
-                              alt=""
-                            />
-                          </td>
-                          <td className="flex gap-2">
-                            <button
-                              onClick={() => editSaller(product?._id)}
-                              className="btn btn-ghost btn-sm bg-gray-300"
-                            >
-                              <MdOutlineEdit className="text-xl" />
-                            </button>
-                            <button
-                              onClick={() => handleDelete(product)}
-                              className="btn btn-ghost btn-sm bg-gray-300"
-                            >
-                              <MdOutlineDeleteOutline className="text-xl" />
-                            </button>
-                          </td>
-                        </tr>
-                      ))}
-                    </tbody>
-                  </table>
-                </div>
-              ) : (
-                <></>
-              )}
+                        </button>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
             </div>
           </div>
           <Pagination
@@ -488,9 +420,6 @@ const ProductDetails = () => {
                 <div className="md:flex md:gap-6">
                   {/* Product Name */}
                   <div className="form-control w-full my-1">
-                    {/* <label className="label">
-                      <span className="label-text">Product Name*</span>
-                    </label> */}
                     <input
                       name="name"
                       defaultValue={sell?.name}
@@ -501,9 +430,6 @@ const ProductDetails = () => {
                   </div>
                   {/* Quantity */}
                   <div className="form-control w-full my-1">
-                    {/* <label className="label">
-                      <span className="label-text">Quantity*</span>
-                    </label> */}
                     <input
                       name="quantity"
                       defaultValue={sell?.quantity}
@@ -516,9 +442,6 @@ const ProductDetails = () => {
                 <div className="md:flex md:gap-6">
                   {/* price */}
                   <div className="form-control w-full my-1">
-                    {/* <label className="label">
-                      <span className="label-text">Price*</span>
-                    </label> */}
                     <input
                       name="price"
                       defaultValue={sell?.price}
@@ -543,23 +466,6 @@ const ProductDetails = () => {
                 <div className="md:flex md:gap-6">
                   {/* category */}
                   <div className="form-control w-full my-1">
-                    {/* <label className="label">
-                      <span className="label-text">Category*</span>
-                    </label> */}
-                    {/* <select
-                      name="category"
-                      defaultValue={sell?.category}
-                      className="select select-bordered focus:outline-none w-full"
-                    >
-                      <option disabled value="default">
-                        Select a category
-                      </option>
-                      <option value="punjabi">Punjabi</option>
-                      <option value="suit">Suit</option>
-                      <option value="cosmetics">Cosmetics</option>
-                      <option value="shelai">Shelai</option>
-                      <option value="ready-Made">Ready-Made</option>
-                    </select> */}
                     <select
                       name="category"
                       // className="bg-white p-2 rounded-sm"
@@ -576,9 +482,6 @@ const ProductDetails = () => {
                   </div>
                   {/* product Code */}
                   <div className="form-control w-full my-1">
-                    {/* <label className="label">
-                      <span className="label-text">Product Code*</span>
-                    </label> */}
                     <input
                       name="code"
                       defaultValue={sell?.productCode}
@@ -592,9 +495,6 @@ const ProductDetails = () => {
                   Edit Product
                 </button>
               </form>
-              {/* <button onClick={() => setOpenModal(false)} className="absolute top-0 right-0 p-2 mt-1 mr-1 btn btn-ghost btn-sm bg-gray-300">
-                                <MdClose className="text-xl" />
-                            </button> */}
             </div>
           </div>
         </div>

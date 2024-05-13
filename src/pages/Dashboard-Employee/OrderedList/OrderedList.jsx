@@ -13,7 +13,7 @@ import { MdLocalMall } from "react-icons/md";
 const OrderedList = () => {
   const [searchValue, setSearchValue] = useState("");
   const [status, setStatus] = useState("pending");
-  const [axiosSecure] = useAxiosSecure();
+  const axiosSecure = useAxiosSecure();
   const axiosPublic = useAxiosPublic();
 
   const handleStatus = (set) => {
@@ -78,8 +78,6 @@ const OrderedList = () => {
   useEffect(() => {
     refetch();
   }, [orderBySearch, currentPage, searchValue, status]);
-
-  // console.log(orderBySearch);
 
   return (
     <div className="overflow-scroll 2xl:h-[80vh] lg:h-[84.5vh] mx-3 lg:mx-0">

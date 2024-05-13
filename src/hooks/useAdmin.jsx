@@ -6,8 +6,8 @@ import useAxiosPublic from "./useAxiosPublic";
 
 const useAdmin = () => {
   const { user, setLoading, loading } = useAuth();
-  //   const axios = useAxiosSecure();
-  const axios = useAxiosPublic();
+  const axios = useAxiosSecure();
+  // const axios = useAxiosPublic();
 
   const { data: isAdmin, isPending: isAdminLoading } = useQuery({
     queryKey: [user?.email, "isAdmin"],

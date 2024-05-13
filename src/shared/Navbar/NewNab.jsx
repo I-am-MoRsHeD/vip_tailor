@@ -4,6 +4,7 @@ import "./Navbar.css";
 import useAuth from "../../hooks/useAuth";
 import Swal from "sweetalert2";
 import { IoIosCloseCircle } from "react-icons/io";
+import { clearToken } from "../../components/authApi/AuthApi";
 const NewNav = () => {
   const { logOut, user } = useAuth();
   const [isScrolled, setIsScrolled] = useState(false);
@@ -30,29 +31,38 @@ const NewNav = () => {
     }
   };
 
-  const handleLogout = () => {
-    Swal.fire({
-      title: "Are you sure?",
-      text: "You won't be able to revert this!",
-      icon: "warning",
-      showCancelButton: true,
-      confirmButtonColor: "#3085d6",
-      cancelButtonColor: "#d33",
-      confirmButtonText: "Yes, Logged Out!",
-    }).then((result) => {
+  const handleLogout = async () => {
+    try {
+      const result = await Swal.fire({
+        title: "Are you sure?",
+        text: "You won't be able to revert this!",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "Yes, Log Out!",
+      });
+
       if (result.isConfirmed) {
-        logOut().then(() => {
-          Swal.fire({
-            position: "top-end",
-            icon: "success",
-            title: "Successfully logged out",
-            showConfirmButton: false,
-            timer: 1500,
-          });
-          navigate("/");
+        await logOut();
+        clearToken();
+        Swal.fire({
+          position: "top-end",
+          icon: "success",
+          title: "Successfully logged out",
+          showConfirmButton: false,
+          timer: 1500,
         });
+        navigate("/");
       }
-    });
+    } catch (error) {
+      console.error("Error logging out:", error);
+      Swal.fire({
+        icon: "error",
+        title: "Oops...",
+        text: "Something went wrong while logging out.",
+      });
+    }
   };
 
   //   const navlinks = (

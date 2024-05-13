@@ -6,6 +6,7 @@ import { FaUser } from "react-icons/fa";
 import { FaLock } from "react-icons/fa";
 import useAuth from "../../../hooks/useAuth";
 import useUserRoll from "../../../hooks/useUserRoll";
+import { getToken } from "../../../components/authApi/AuthApi";
 
 const SignIn = () => {
   const { signInUser, googleSignIn } = useAuth();
@@ -22,15 +23,13 @@ const SignIn = () => {
     setError("");
 
     try {
-      const user1 = await signInUser(email, password);
-      //   console.log(user1.user.email);
+      const userCheak = await signInUser(email, password);
+      console.log(userCheak?.user?.email);
+      await getToken(userCheak?.user?.email);
 
-      const loggedUser = await useUserRoll(user1.user.email);
-      //   console.log(loggedUser);
-
-      if (loggedUser === "employee") {
-        navigate("/employeeHome");
-      } else if (loggedUser === "admin") {
+      const loggedUser = await useUserRoll(userCheak?.user?.email);
+      // console.log(loggedUser);
+      if (loggedUser === "admin") {
         navigate("/adminHome");
       } else {
         navigate("/");

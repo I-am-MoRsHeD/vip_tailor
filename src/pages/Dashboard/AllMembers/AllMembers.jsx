@@ -10,7 +10,7 @@ import useAuth from "../../../hooks/useAuth";
 import DashBoardTitle from "../../../components/dashboardTitle/DashBoardTitle";
 
 const AllMembers = () => {
-  const [axiosSecure] = useAxiosSecure();
+  const axiosSecure = useAxiosSecure();
   const axiosPublic = useAxiosPublic();
   // Pagination
   const [productLength, setProductLength] = useState(0);
@@ -58,7 +58,7 @@ const AllMembers = () => {
       refetchByPagination();
     }
   }, [userPagination]);
-  console.log(userPagination?.totalCount);
+  // console.log(userPagination?.totalCount);
 
   // make admin
   const handleMakeAdmin = (user) => {
@@ -67,7 +67,7 @@ const AllMembers = () => {
         Swal.fire({
           position: "top-end",
           icon: "success",
-          title:` ${user?.name} is now an Admin`,
+          title: ` ${user?.name} is now an Admin`,
           showConfirmButton: false,
           timer: 1500,
         });
@@ -77,20 +77,20 @@ const AllMembers = () => {
   };
 
   // make employee
-  const handleMakeEmployee = (user) => {
-    axiosPublic.patch(`/user/employee/${user?._id}`).then((res) => {
-      refetchByPagination();
-      if (res?.data?.message === "success") {
-        Swal.fire({
-          position: "top-end",
-          icon: "success",
-          title: `${user?.name} is now an employee`,
-          showConfirmButton: false,
-          timer: 1500,
-        });
-      }
-    });
-  };
+  // const handleMakeEmployee = (user) => {
+  //   axiosPublic.patch(`/user/employee/${user?._id}`).then((res) => {
+  //     refetchByPagination();
+  //     if (res?.data?.message === "success") {
+  //       Swal.fire({
+  //         position: "top-end",
+  //         icon: "success",
+  //         title: `${user?.name} is now an employee`,
+  //         showConfirmButton: false,
+  //         timer: 1500,
+  //       });
+  //     }
+  //   });
+  // };
 
   // make user
   const handleMakeUser = (user) => {
@@ -186,7 +186,7 @@ const AllMembers = () => {
                         </button>
                       )}
                       {/* make employee */}
-                      {user?.role === "employee" ? (
+                      {/* {user?.role === "employee" ? (
                         <h1 className="bg-yellow-950 md:text-sm text-xs text-white font-bold md:px-2 px-2 lg:px-6 lg:py-4 md:py-2 py-2 rounded-lg">
                           Employee
                         </h1>
@@ -197,7 +197,7 @@ const AllMembers = () => {
                         >
                           Make Employee
                         </button>
-                      )}
+                      )} */}
                       {/* make user */}
                       {user?.role === "user" ? (
                         <h1 className="bg-yellow-950 md:text-sm text-xs text-white font-bold md:px-2 px-2 lg:px-6 lg:py-4 md:py-3 py-2 rounded-lg">
@@ -206,7 +206,9 @@ const AllMembers = () => {
                       ) : (
                         <button
                           onClick={() => handleMakeUser(user)}
-                          className="md:bg-white bg-gray-100 font-bold md:text-sm text-xs md:px-2 lg:px-6 lg:py-4 px-2 md:py-2 py-2 rounded-lg hover:shadow-md hover:scale-105 duration-300 hover:duration-300 whitespace-nowrap"
+                          className="md:bg-white bg-gray-100 font-bold md:text-sm text-xs md:px-2 lg:px-6 lg:py-4 px-2 md:py-2 py-2 rounded-lg 
+    hover:shadow-md hover:scale-105 duration-300 hover:duration-300 whitespace-nowrap"
+                          disabled={user?.email === email}
                         >
                           Make User
                         </button>

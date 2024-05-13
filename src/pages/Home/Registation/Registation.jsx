@@ -7,6 +7,7 @@ import useAxiosPublic from "../../../hooks/useAxiosPublic";
 import Swal from "sweetalert2";
 import { updateProfile } from "@firebase/auth";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
+import { getToken } from "../../../components/authApi/AuthApi";
 
 const image_hosting_key = import.meta.env.VITE_IMAGE_HOSITNG_KEY;
 const image_hosing_api = `https://api.imgbb.com/1/upload?key=${image_hosting_key}`;
@@ -18,7 +19,7 @@ const Registation = () => {
   const axiosPublic = useAxiosPublic();
   const navigate = useNavigate();
 
-  const hanldeRegister = (e) => {
+  const hanldeRegister = async (e) => {
     e.preventDefault();
     const form = e.target;
     const email = form.email.value.toLowerCase();
@@ -30,37 +31,31 @@ const Registation = () => {
       email: form.email.value.toLowerCase(),
       role: "user",
     };
-    // console.log(userInfo);
-
     setError("");
 
-    createUser(email, password)
-      .then((result) => {
-        // console.log(result.user);
-
-        // updated user profile
-        updateProfile(result?.user, {
-          displayName: form.name.value,
-          photoURL: "https://i.ibb.co/wzY7xRG/bronze.png",
-        });
-
-        // insert user data to the database
-        axiosPublic.post("/user", userInfo).then((res) => {
-          if (res.data.message === "Success") {
-            Swal.fire({
-              position: "top-end",
-              icon: "success",
-              title: "Successfully registered",
-              showConfirmButton: false,
-              timer: 1500,
-            });
-            navigate("/message");
-          }
-        });
-      })
-      .catch((error) => {
-        setError(error.message);
+    try {
+      const result = await createUser(email, password);
+      await updateProfile(result?.user, {
+        displayName: form.name.value,
+        photoURL: "https://i.ibb.co/wzY7xRG/bronze.png",
       });
+      const resN = await axiosPublic.post("/user", userInfo).then((res) => {
+        if (res.data.success === "Success") {
+          Swal.fire({
+            position: "top-end",
+            icon: "success",
+            title: "Successfully registered",
+            showConfirmButton: false,
+            timer: 1500,
+          });
+          // navigate("/message");
+        }
+      });
+      console.log(resN);
+      await getToken(result?.user?.email);
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   // google sign in
