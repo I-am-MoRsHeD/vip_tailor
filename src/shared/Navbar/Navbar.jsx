@@ -202,7 +202,7 @@ const Navbar = () => {
               </ul>
             </div>
             <a className="text-white lg:text-[1.3rem] ml-16 font-semibold md:ml-0">
-              VIP TAIRLORS
+              VIP TAILORS
             </a>
           </div>
           <div className="">

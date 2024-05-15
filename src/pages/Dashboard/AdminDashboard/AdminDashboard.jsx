@@ -26,7 +26,7 @@ import { ImStatsDots } from "react-icons/im";
 import { RiFileList3Line } from "react-icons/ri";
 import { BiBarChart } from "react-icons/bi";
 
-const AdminDashboard = ({ isSideMenuOpen, toggleSideMenu }) => {
+const AdminDashboard = ({ isSideMenuOpen, toggleSideMenu, closeSideMenu }) => {
   const { logOut } = useAuth();
   const navigate = useNavigate();
 
@@ -272,7 +272,9 @@ const AdminDashboard = ({ isSideMenuOpen, toggleSideMenu }) => {
           </div>
           {/* items and routes */}
           <div className=" flex flex-col pt-5 justify-between">
-            <ul className="leading-8">{navlinks}</ul>
+            <ul className="leading-8" onClick={() => closeSideMenu()}>
+              {navlinks}
+            </ul>
           </div>
           {/* footer */}
           <div className="flex justify-center items-center">
@@ -299,7 +301,8 @@ const AdminDashboard = ({ isSideMenuOpen, toggleSideMenu }) => {
             </button>
             <div className="flex lg:hidden justify-end mr-4 w-full">
               <button onClick={handleLogout} className="btn btn-sm">
-                <IoPersonOutline className="text-xl" /> Logout
+                {/* <IoPersonOutline className="text-xl" /> */}
+                Log Out
               </button>
             </div>
           </div>

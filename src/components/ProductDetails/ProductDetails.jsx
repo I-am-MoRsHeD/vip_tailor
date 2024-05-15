@@ -286,20 +286,16 @@ const ProductDetails = () => {
           <div className="grid lg:grid-cols-2 grid-cols-1 justify-between items-center my-2 rounded-md gap-2">
             <div className="bg-white p-2 md:p-5 rounded-md flex flex-col lg:justify-start lg:items-start  items-center justify-center gap-2">
               <h1 className="text-xs md:text-sm font-semibold flex items-center justify-start gap-1">
-                <span>
-                  <FaSortAmountUpAlt />
-                </span>
-                Total Product Amount
+                <span>{/* <FaSortAmountUpAlt /> */}</span>
+                Total Product Amount (BDT)
               </h1>
               <h1 className="font-semibold text-xl md:text-2xl">
-                {totalStock} BDT
+                {totalStock}
               </h1>
             </div>
             <div className="bg-white p-2 md:p-5 rounded-md flex flex-col lg:justify-start lg:items-start  items-center justify-center gap-2 ">
               <h1 className="text-xs md:text-sm font-semibold flex items-center justify-start">
-                <span>
-                  <MdLocalMall />
-                </span>
+                <span>{/* <MdLocalMall /> */}</span>
                 Total Quantity
               </h1>
               <h1 className="font-semibold text-xl md:text-2xl">
@@ -322,7 +318,7 @@ const ProductDetails = () => {
             />
           </div>
           <div className="flex flex-col gap-4">
-            <div className="overflow-x-auto">
+            <div className="overflow-x-auto  h-[64vh]">
               <table className="table">
                 <thead>
                   <tr className=" text-black border-b-[1.2px] border-black">
