@@ -11,12 +11,13 @@ const OrderedProductDetails = ({
   setCurrentPage,
   totalPages,
   refetch,
+  orderProducts,
+  dataFetch,
 }) => {
   const axiosPublic = useAxiosPublic();
   const [openModal, setOpenModal] = useState(false);
   const [selectedData, setSelectedData] = useState(null);
   const handleCompleteModal = (product) => {
-    // console.log(product);
     setSelectedData(product);
     setOpenModal(true);
   };
@@ -24,19 +25,13 @@ const OrderedProductDetails = ({
   const handleCloseModal = () => {
     setOpenModal(false);
   };
-  // console.log(products);
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        await refetchData();
-      } catch (error) {
-        console.error("Error fetching data:", error);
-      }
-    };
-
-    fetchData();
-  }, []); // This will run once when the component mounts
-
+  const calculateDueAmount = (products, advancedAmount) => {
+    const totalAmount = products?.reduce(
+      (sum, product) => sum + product?.price * product?.quantity,
+      0
+    );
+    return totalAmount - advancedAmount;
+  };
   return (
     <div className="flex flex-col gap-4">
       <div className="overflow-x-auto">
@@ -65,7 +60,7 @@ const OrderedProductDetails = ({
               <tr key={product?._id} className="border-b-[1.5px] border-black">
                 <td className="p-1">{product?.invoiceNo}</td>
                 <td>
-                  {product?.products.map((dd, id) => (
+                  {product?.products?.map((dd, id) => (
                     <h1 key={dd?._id}>{dd?.name}</h1>
                   ))}
                 </td>
@@ -79,12 +74,14 @@ const OrderedProductDetails = ({
                     <h1 key={dd?._id}>{dd?.quantity}</h1>
                   ))}
                 </td>
-                {product.status === "pending" && (
+                {product?.status === "pending" && (
                   <>
                     <td>{product?.advancedAmount}</td>
                     <td>
-                      {product?.quantity * product?.price -
-                        product?.advancedAmount}
+                      {calculateDueAmount(
+                        product?.products,
+                        product?.advancedAmount
+                      )}
                     </td>
                   </>
                 )}
@@ -125,6 +122,7 @@ const OrderedProductDetails = ({
           onClose={handleCloseModal}
           refetchData={refetch}
           complete={handleCompleteModal}
+          dataFetch={dataFetch}
         />
       )}
     </div>

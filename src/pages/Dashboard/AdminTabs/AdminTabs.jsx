@@ -8,10 +8,9 @@ import {
   IoBarChartOutline,
   IoPrintOutline,
 } from "react-icons/io5";
-import { BsCart3, BsFilterLeft } from "react-icons/bs";
+import { BsCart3 } from "react-icons/bs";
 import { ReactToPrint } from "react-to-print";
 import { FaSortAmountDown } from "react-icons/fa";
-import DashBoardTitle from "../../../components/dashboardTitle/DashBoardTitle";
 
 const AdminTabs = ({ allOrderProducts }) => {
   const axiosPublic = useAxiosPublic();
@@ -48,7 +47,6 @@ const AdminTabs = ({ allOrderProducts }) => {
     setDefaultTab(index);
     setFilter(category);
     const categoryName = category.toLowerCase();
-    console.log(categoryName);
 
     await axiosPublic.get(`/soldItems/${categoryName}`).then((res) => {
       setSelectedData(res.data);
@@ -75,16 +73,26 @@ const AdminTabs = ({ allOrderProducts }) => {
   }, [allOrderProducts]);
 
   const pendingOrders = orderProducts?.filter(
-    (product) => product.status === "pending"
+    (product) => product?.status === "pending"
   );
+
   const completedOrders = orderProducts?.filter(
-    (product) => product.status === "completed"
+    (product) => product?.status === "completed"
   );
-  const completeOrderAmount = completedOrders?.reduce(
-    (total, product) =>
-      total + parseFloat(product?.price) * parseFloat(product?.quantity),
-    0
-  );
+
+  let completeOrderAmount = 0;
+  if (completedOrders && Array.isArray(completedOrders)) {
+    completeOrderAmount = completedOrders?.reduce((total, item) => {
+      if (item?.products && Array.isArray(item?.products)) {
+        return (
+          total +
+          item?.products.reduce((acc, product) => acc + product?.quantity, 0)
+        );
+      } else {
+        return total;
+      }
+    }, 0);
+  }
 
   const totalSoldItemsAmount = soldItemsInfo?.reduce(
     (total, product) => total + parseInt(product?.price),
@@ -104,7 +112,6 @@ const AdminTabs = ({ allOrderProducts }) => {
   return (
     <div className="overflow-hidden w-full h-full">
       <Tabs>
-        {/* tab lists */}
         <div className="flex flex-col md:flex-row lg:flex-row w-full gap-5">
           <div className="w-full md:w-[40%] lg:w-1/3 bg-gray-100 h-24 flex flex-col px-16 text-center md:text-start py-4 md:px-7 md:py-4 lg:px-4 lg:py-4 space-y-3 rounded-md mx-auto md:mx-0">
             <h4 className="text-sm font-semibold">
@@ -112,7 +119,6 @@ const AdminTabs = ({ allOrderProducts }) => {
             </h4>
             <h1 className="text-xl md:text-2xl font-bold">{totalSells} BDT</h1>
           </div>
-          {/* tab lists */}
           <TabList className="font-bold w-full md:w-3/4 lg:w-5/6 mx-auto py-4 bg-gray-100 flex flex-row justify-center items-center gap-2 md:gap-4 lg:gap-10 rounded-md">
             <Tab
               className="border-none bg-white lg:py-5 md:py-5 py-2 lg:px-14 md:px-10 px-4 rounded-md cursor-pointer"
@@ -120,7 +126,6 @@ const AdminTabs = ({ allOrderProducts }) => {
             >
               Sell Product
             </Tab>
-
             <Tab
               className="border-none bg-white lg:py-5 md:py-5 py-2 lg:px-14 md:px-10 px-4 rounded-md cursor-pointer"
               selectedClassName="selected-tab bg-yellow-950 text-white lg:py-5 md:py-5 py-2 lg:px-14 md:px-10 px-4"
@@ -129,14 +134,11 @@ const AdminTabs = ({ allOrderProducts }) => {
             </Tab>
           </TabList>
         </div>
-        {/* tab panel */}
         <div className="mt-2 bg-gray-100 rounded-lg 2xl:h-[44vh] xl:h-[55vh] lg:h-96 md:h-[70vh]">
-          {/* sell product */}
           <TabPanel>
             <div className="flex flex-col p-1 md:p-3 gap-4">
               <div className="h-full">
-                {/* tab lists */}
-                <div className="font-bold pb-3 flex flex-row  justify-between items-center">
+                <div className="font-bold pb-3 flex flex-row justify-between items-center">
                   <div>
                     <select
                       className="bg-white px-4 py-2 rounded-md"
@@ -201,7 +203,6 @@ const AdminTabs = ({ allOrderProducts }) => {
                         </li>
                       </ul>
                     </div>
-                    {/* print */}
                     <div className="flex justify-end mr-4">
                       <ReactToPrint
                         trigger={() => (
@@ -216,7 +217,6 @@ const AdminTabs = ({ allOrderProducts }) => {
                     </div>
                   </div>
                 </div>
-                {/* sub tab panel */}
                 <div className="">
                   <div className="my-5 flex flex-col justify-center 4xl:h-72 3xl:h-56 xl:h-56">
                     {selectedData ? (
@@ -243,9 +243,7 @@ const AdminTabs = ({ allOrderProducts }) => {
               </div>
             </div>
           </TabPanel>
-          {/* order product */}
           <TabPanel>
-            {/* Print and filter button */}
             <div className="flex items-center justify-between md:px-5 px-2">
               <h1 className="text-xl font-semibold">Order Product</h1>
               <div className="flex justify-end my-5">
@@ -313,12 +311,9 @@ const AdminTabs = ({ allOrderProducts }) => {
                 </div>
               </div>
             </div>
-            {/* card container */}
             <div ref={componentRef}>
-              {/* card container */}
               <div className="flex justify-center">
                 <div className="flex flex-col gap-5 justify-center lg:w-4/6 w-5/6 4xl:my-10 3xl:my-5 md:my-0 my-5">
-                  {/* cards */}
                   <div className="grid grid-cols-1 md:grid-cols-2 px-1 md:px-0 gap-2 md:gap-5 w-full">
                     <div className="w-full shadow-md rounded-md flex flex-col gap-2 md:px-4 md:py-5 px-4 py-5 bg-white">
                       <div className="rounded-lg flex items-center gap-1">

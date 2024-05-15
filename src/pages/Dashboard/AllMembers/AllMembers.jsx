@@ -214,7 +214,6 @@ const AllMembers = () => {
                         </button>
                       )}
                     </div>
-
                     <div className=" md:flex justify-center items-center hidden md:w-1/12">
                       <button onClick={() => handleDelete(user)} className="">
                         <FaRegTrashAlt className="text-xl" />

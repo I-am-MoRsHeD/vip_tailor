@@ -43,7 +43,7 @@ const useOrderedProduct = () => {
       setProductLength(0);
     }
   }, [orderProducts]);
-  console.log(orderProducts.totalCount);
+  // console.log(orderProducts.totalCount);
 
   return [orderProducts, refetch, currentPage, totalPages, setCurrentPage];
 };

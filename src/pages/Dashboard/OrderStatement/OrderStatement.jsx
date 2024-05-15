@@ -11,7 +11,7 @@ const OrderStatement = () => {
   const [orderProducts, refetch, currentPage, totalPages, setCurrentPage] =
     useOrderedProduct();
   const axiosPublic = useAxiosPublic();
-  console.log(orderProducts);
+  // console.log(orderProducts);
 
   const handleDelete = (product) => {
     Swal.fire({
@@ -25,7 +25,7 @@ const OrderStatement = () => {
     }).then((result) => {
       if (result.isConfirmed) {
         axiosPublic.delete(`/orderProduct/${product?._id}`).then((res) => {
-          console.log(res);
+          // console.log(res);
           if (res.status === 200) {
             Swal.fire({
               title: "Deleted!",
@@ -38,6 +38,33 @@ const OrderStatement = () => {
       }
     });
   };
+  let totalQuantity = 0;
+  let totalAmount = 0;
+  // console.log(orderProducts);
+
+  if (orderProducts?.items && Array.isArray(orderProducts?.items)) {
+    totalQuantity = orderProducts?.items?.reduce((total, item) => {
+      if (item?.products && Array.isArray(item?.products)) {
+        return (
+          total +
+          item?.products.reduce((acc, product) => acc + product?.quantity, 0)
+        );
+      } else {
+        return total;
+      }
+    }, 0);
+
+    totalAmount = orderProducts?.items?.reduce((total, item) => {
+      if (item?.products && Array.isArray(item.products)) {
+        return (
+          total +
+          item?.products.reduce((acc, product) => acc + product?.price, 0)
+        );
+      } else {
+        return total;
+      }
+    }, 0);
+  }
   return (
     <div className="overflow-scroll 2xl:h-[80vh] lg:h-[84.5vh] lg:ml-3 xl:ml-9 mx-3 lg:mx-0">
       <div className="mb-2">
@@ -80,8 +107,8 @@ const OrderStatement = () => {
                       </div>
                     </div>
                   </td>
-                  <td>{product?.quantity}</td>
-                  <td>{product?.price}</td>
+                  <td>{totalQuantity}</td>
+                  <td>{totalAmount}</td>
                   <td>
                     <button
                       onClick={() => handleDelete(product)}

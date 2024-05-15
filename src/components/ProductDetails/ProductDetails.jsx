@@ -392,7 +392,7 @@ const ProductDetails = () => {
 
       {openSell && (
         <div
-          className="fixed inset-0 z-10 flex items-center lg:ml-32 ml-1 justify-center bg-black bg-opacity-70"
+          className="fixed z-[100] flex flex-col items-center justify-center inset-0 bg-black/10 duration-100 "
           aria-labelledby="modal-title"
           role="dialog"
           aria-modal="true"
@@ -502,7 +502,7 @@ const ProductDetails = () => {
 
       {openModal && (
         <div
-          className="fixed inset-0 z-10 flex items-center pt-32 pb-14 lg:pt-0 lg:pb-0 lg:ml-32 justify-center bg-black bg-opacity-70"
+          className="fixed z-[100] flex flex-col items-center justify-center inset-0 bg-black/10 duration-100 "
           aria-labelledby="modal-title"
           role="dialog"
           aria-modal="true"

@@ -3,52 +3,73 @@ import Swal from "sweetalert2";
 import { GiCancel } from "react-icons/gi";
 import { FaRegEdit } from "react-icons/fa";
 import useAxiosPublic from "../../hooks/useAxiosPublic";
-const OrderCompleteModal = ({ data, onClose, refetchData, complete }) => {
+const OrderCompleteModal = ({
+  data,
+  onClose,
+  refetchData,
+  complete,
+  dataFetch,
+  setOrderData,
+}) => {
   const axios = useAxiosPublic();
   const [orderId, setOrderId] = useState();
 
+  const [productStatuses, setProductStatuses] = useState(
+    data?.products?.map((product) => product?.productStatus) || []
+  );
   useEffect(() => setOrderId(data?._id), []);
+  //   console.log(data);
+
   const handleComplete = async (productId) => {
     try {
       const url = `/orderProduct/orderId/${orderId}/productStatus/${productId}`;
-      //   console.log(url);
+      const updatedStatuses = productStatuses?.map((status, index) =>
+        data?.products[index]?._id === productId ? "complete" : status
+      );
+      setProductStatuses(updatedStatuses);
+
       const res = await axios.patch(url);
-      //   await refetchData();
       if (res.data.message === "success") {
         Swal.fire({
           position: "top-end",
           icon: "success",
-          title: "Order added successfully",
+          title: "Product marked as complete",
           showConfirmButton: false,
           timer: 1500,
         });
+        // onClose();
       }
-      await refetchData();
+      refetchData();
+      dataFetch();
+      // setOrderData([]);
     } catch (error) {
       console.error("Error completing order:", error);
     }
   };
+  //   console.log(productStatuses);
   const handleCompleteAll = async (id) => {
     try {
       const url = `/orderProduct/${id}`;
-      //   console.log(url);
       const res = await axios.patch(url);
-      //   await refetchData();
       if (res.data.message === "success") {
         Swal.fire({
           position: "top-end",
-          icon: "success",
-          title: "Order added successfully",
+          // icon: "success",
+          title: "Order Completed successfully",
           showConfirmButton: false,
           timer: 1500,
         });
       }
-      await refetchData();
+      refetchData();
+      dataFetch();
+
+      onClose();
     } catch (error) {
       console.error("Error completing order:", error);
+      await refetchData();
     }
   };
-
+  //   console.log(dataFetch());
   return (
     <div className="fixed z-[100] flex flex-col items-center justify-center inset-0 bg-black/10 duration-100 ">
       <div className="max-w-2xl rounded-sm bg-white p-10 scale-1 opacity-1 duration-200">
@@ -79,14 +100,23 @@ const OrderCompleteModal = ({ data, onClose, refetchData, complete }) => {
                   >
                     <td className="whitespace-nowrap">{dd?.name}</td>
                     <td>{dd?.quantity}</td>
-                    <td>{dd?.productStatus}</td>
+                    <td>{productStatuses[id]}</td>
                     <td className=" text-base gap-3">
-                      <button
-                        onClick={() => handleComplete(dd?._id)}
-                        className="rounded-lg text-white  px-2 py-[2px] bg-blue-500"
-                      >
-                        Complete
-                      </button>
+                      {data?.products?.length < 2 ? (
+                        <button
+                          onClick={() => handleCompleteAll(orderId)}
+                          className="rounded-lg text-white  px-2 py-[2px] bg-blue-500 text-center"
+                        >
+                          Complete
+                        </button>
+                      ) : (
+                        <button
+                          onClick={() => handleComplete(dd?._id)}
+                          className="rounded-lg text-white  px-2 py-[2px] bg-blue-500"
+                        >
+                          Complete
+                        </button>
+                      )}
                     </td>
                   </tr>
                 ))}
@@ -94,14 +124,18 @@ const OrderCompleteModal = ({ data, onClose, refetchData, complete }) => {
             </div>
           </div>
         </div>
-        <div className="flex justify-center items-center my-3">
-          <button
-            onClick={() => handleCompleteAll(orderId)}
-            className="rounded-lg text-white  px-2 py-[2px] bg-blue-500 text-center"
-          >
-            Complete All
-          </button>
-        </div>
+        {data?.products?.length > 1 ? (
+          <div className="flex justify-center items-center my-3">
+            <button
+              onClick={() => handleCompleteAll(orderId)}
+              className="rounded-lg text-white  px-2 py-[2px] bg-blue-500 text-center"
+            >
+              Complete All
+            </button>
+          </div>
+        ) : (
+          ""
+        )}
       </div>
     </div>
   );

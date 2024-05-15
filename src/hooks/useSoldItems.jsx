@@ -35,7 +35,7 @@ const useSoldItems = () => {
       return res.data;
     },
   });
-  console.log(soldItems);
+  // console.log(soldItems);
   useEffect(() => {
     if (soldItems && soldItems?.totalCount) {
       setProductLength(soldItems?.totalCount);

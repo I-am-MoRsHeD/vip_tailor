@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Tab, TabList, TabPanel, Tabs } from "react-tabs";
 import "react-tabs/style/react-tabs.css";
-import SectionTitle from "../../../components/SectionTitle/SectionTitle";
+// import SectionTitle from "../../../components/SectionTitle/SectionTitle";
 import OrderedProductDetails from "../../../components/OrderedProductDetails/OrderedProductDetails";
 import useAuth from "../../../hooks/useAuth";
 import useAxiosPublic from "../../../hooks/useAxiosPublic";
@@ -9,26 +9,26 @@ import { useQuery } from "@tanstack/react-query";
 import useAxiosSecure from "../../../hooks/useAxiosSecure";
 import { FaSortAmountUpAlt } from "react-icons/fa";
 import { MdLocalMall } from "react-icons/md";
+import useOrderedProduct from "../../../hooks/useOrderedProduct";
 
 const OrderedList = () => {
   const [searchValue, setSearchValue] = useState("");
   const [status, setStatus] = useState("pending");
+  const [allData, setAllData] = useState();
+  // const [orderData, setOrderData] = useState();
   const axiosSecure = useAxiosSecure();
   const axiosPublic = useAxiosPublic();
-
+  const [orderProducts, dataFetch = refetch] = useOrderedProduct();
   const handleStatus = (set) => {
     setStatus(set);
-    // console.log(set);
   };
 
   const [productLength, setProductLength] = useState(0);
-  // Pagination
   const [currentPage, setCurrentPage] = useState(0);
   const itemsPerPage = 5;
   const totalPages = Math.ceil(productLength / itemsPerPage);
   const { user } = useAuth();
   const email = user?.email;
-  // console.log(currentPage, totalPages, productLength);
 
   const { data: userInfo } = useQuery({
     queryKey: ["userInfo", email],
@@ -54,8 +54,7 @@ const OrderedList = () => {
       currentPage,
       status,
     ],
-    cacheTime: 0,
-    staleTime: 60000,
+
     queryFn: async () => {
       const res = await axiosPublic.get(
         `/orderProduct/1/search?email=${email}&searchValue=${searchValue}&itemsPerPage=${itemsPerPage}&currentPage=${currentPage}&status=${status}`
@@ -64,20 +63,58 @@ const OrderedList = () => {
     },
   });
 
-  // console.log(orderBySearch);
   useEffect(() => {
-    if (orderBySearch && orderBySearch.totalCount) {
-      setProductLength(orderBySearch.totalCount);
+    if (orderBySearch && orderBySearch?.totalCount) {
+      setProductLength(orderBySearch?.totalCount);
       refetch();
+      dataFetch();
     } else {
       setProductLength(0);
       refetch();
+      dataFetch();
     }
   }, [orderBySearch]);
 
   useEffect(() => {
+    dataFetch();
     refetch();
   }, [orderBySearch, currentPage, searchValue, status]);
+
+  useEffect(() => {
+    if (orderProducts && status) {
+      const filteredData = orderProducts?.items?.filter(
+        (item) => item?.status === status
+      );
+      setAllData(filteredData);
+    }
+  }, [orderProducts, status]);
+
+  let totalQuantity = 0;
+  let totalAmount = 0;
+
+  if (allData && Array.isArray(allData)) {
+    totalQuantity = allData?.reduce((total, item) => {
+      if (item?.products && Array.isArray(item?.products)) {
+        return (
+          total +
+          item?.products.reduce((acc, product) => acc + product?.quantity, 0)
+        );
+      } else {
+        return total;
+      }
+    }, 0);
+
+    totalAmount = allData?.reduce((total, item) => {
+      if (item?.products && Array.isArray(item.products)) {
+        return (
+          total +
+          item?.products.reduce((acc, product) => acc + product?.price, 0)
+        );
+      } else {
+        return total;
+      }
+    }, 0);
+  }
 
   return (
     <div className="overflow-scroll 2xl:h-[80vh] lg:h-[84.5vh] mx-3 lg:mx-0">
@@ -91,7 +128,9 @@ const OrderedList = () => {
               </span>
               Total Product Amount
             </h1>
-            <h1 className="font-semibold text-xl md:text-2xl">1000 BDT</h1>
+            <h1 className="font-semibold text-xl md:text-2xl">
+              {totalAmount} BDT
+            </h1>
           </div>
           <div className="bg-white p-2 md:p-5 rounded-md flex flex-col lg:justify-start lg:items-start  items-center justify-center gap-2 ">
             <h1 className="text-xs md:text-sm font-semibold flex items-center justify-start">
@@ -100,7 +139,9 @@ const OrderedList = () => {
               </span>
               Total Quantity
             </h1>
-            <h1 className="font-semibold text-xl md:text-2xl">1000</h1>
+            <h1 className="font-semibold text-xl md:text-2xl">
+              {totalQuantity}
+            </h1>
           </div>
         </div>
         <Tabs>
@@ -113,13 +154,7 @@ const OrderedList = () => {
             >
               Pending
             </Tab>
-            {/* <Tab
-              className="border-none bg-white lg:py-5 lg:px-14 py-3 px-10 rounded-md cursor-pointer"
-              selectedClassName="selected-tab bg-yellow-950 text-white lg:py-5 lg:px-14 py-3 px-10"
-              onClick={() => handleStatus("inHouse")}
-            >
-              In House
-            </Tab> */}
+
             <Tab
               className="border-none bg-white lg:py-5 lg:px-14 py-3 px-10 rounded-md cursor-pointer"
               selectedClassName="selected-tab bg-yellow-950 text-white lg:py-5 lg:px-14 py-3 px-10"
@@ -149,21 +184,11 @@ const OrderedList = () => {
                     setCurrentPage={setCurrentPage}
                     totalPages={totalPages}
                     refetch={refetch}
+                    dataFetch={dataFetch}
                   />
                 </div>
               </TabPanel>
-              {/* <TabPanel>
-                <div className="flex flex-col px-5 gap-4">
-                  <OrderedProductDetails
-                    products={orderBySearch}
-                    filteredUser={userInfo}
-                    currentPage={currentPage}
-                    setCurrentPage={setCurrentPage}
-                    totalPages={totalPages}
-                    refetch={refetch}
-                  />
-                </div>
-              </TabPanel> */}
+
               <TabPanel>
                 <div className="flex flex-col px-5 gap-4">
                   <OrderedProductDetails
@@ -173,6 +198,7 @@ const OrderedList = () => {
                     setCurrentPage={setCurrentPage}
                     totalPages={totalPages}
                     refetch={refetch}
+                    dataFetch={dataFetch}
                   />
                 </div>
               </TabPanel>
