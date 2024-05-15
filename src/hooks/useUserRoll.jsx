@@ -1,6 +1,6 @@
 const useUserRoll = async (email) => {
   try {
-    const response = await fetch(`http://localhost:5000/user/${email}`); // Adjust the endpoint according to your backend
+    const response = await fetch(`https://super-shop-server-3.vercel.app/user/${email}`); // Adjust the endpoint according to your backend
     const data = await response.json();
     return data.role;
   } catch (error) {

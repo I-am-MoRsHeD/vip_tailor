@@ -193,7 +193,7 @@ const AdminDashboard = ({ isSideMenuOpen, toggleSideMenu }) => {
           <span className="ml-4">Add Notice</span>
         </NavLink>
       </li>
-      <li className="relative px-2 py-0 ">
+      <li className="relative px-2 py-0">
         <NavLink
           className={({ isActive }) =>
             isActive
@@ -243,7 +243,7 @@ const AdminDashboard = ({ isSideMenuOpen, toggleSideMenu }) => {
     >
       {/* Dashboard */}
       <aside className="z-20 flex-shrink-0 fixed hidden w-[285px] overflow-y-auto bg-white lg:block lg:mt-20 4xl:ml-[12%] 3xl:ml-[11%] 2xl:ml-[13%] xl:ml-5 rounded-lg ">
-        <div className="2xl:h-[80vh] lg:h-[84.5vh] py-3 pl-3 flex flex-col 2xl:justify-between gap-9 shadow-xl">
+        <div className="2xl:h-[80vh] lg:h-[88.5vh] py-3 pl-3 flex flex-col 2xl:justify-between gap-9 shadow-xl">
           {/* logo */}
           <div>
             <p className="font-bold text-lg">Admin Dashboard</p>
