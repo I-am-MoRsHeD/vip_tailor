@@ -115,9 +115,10 @@ const AdminTabs = ({ allOrderProducts }) => {
         <div className="flex flex-col md:flex-row lg:flex-row w-full gap-5">
           <div className="w-full md:w-[40%] lg:w-1/3 bg-gray-100 h-24 flex flex-col px-16 text-center md:text-start py-4 md:px-7 md:py-4 lg:px-4 lg:py-4 space-y-3 rounded-md mx-auto md:mx-0">
             <h4 className="text-sm font-semibold">
-              <IoBarChartOutline className="inline mr-1" /> Total Sales
+              {/* <IoBarChartOutline className="inline mr-1" /> */}
+              Total Sales (BDT)
             </h4>
-            <h1 className="text-xl md:text-2xl font-bold">{totalSells} BDT</h1>
+            <h1 className="text-xl md:text-2xl font-bold">{totalSells}</h1>
           </div>
           <TabList className="font-bold w-full md:w-3/4 lg:w-5/6 mx-auto py-4 bg-gray-100 flex flex-row justify-center items-center gap-2 md:gap-4 lg:gap-10 rounded-md">
             <Tab
@@ -318,23 +319,22 @@ const AdminTabs = ({ allOrderProducts }) => {
                     <div className="w-full shadow-md rounded-md flex flex-col gap-2 md:px-4 md:py-5 px-4 py-5 bg-white">
                       <div className="rounded-lg flex items-center gap-1">
                         <div className="rounded-lg text-black text-base ">
-                          <IoBagOutline className="font-semibold" />
+                          {/* <IoBagOutline className="font-semibold" /> */}
                         </div>
                         <h3 className="text-base font-semibold ">
-                          Total Sales
+                          Total Sales (BDT)
                         </h3>
                       </div>
                       <div>
                         <h2 className="text-xl md:text-2xl font-bold ">
                           {completeOrderAmount === 0 ? 0 : completeOrderAmount}{" "}
-                          BDT
                         </h2>
                       </div>
                     </div>
                     <div className="w-full shadow-md rounded-md flex flex-col gap-2  md:p-5 px-4 py-5 bg-white">
                       <div className="rounded-lg flex items-center gap-1">
                         <div className="rounded-lg text-black text-base ">
-                          <BsCart3 className="font-semibold" />
+                          {/* <BsCart3 className="font-semibold" /> */}
                         </div>
                         <h3 className="text-sm md:text-base font-semibold ">
                           Total Orders
@@ -349,7 +349,7 @@ const AdminTabs = ({ allOrderProducts }) => {
                     <div className="w-full shadow-md rounded-md flex flex-col gap-2  md:p-5 px-4 py-5 bg-white">
                       <div className="rounded-lg flex items-center gap-1">
                         <div className="rounded-lg text-black text-base ">
-                          <IoBagOutline className="font-semibold" />
+                          {/* <IoBagOutline className="font-semibold" /> */}
                         </div>
                         <h3 className="text-sm md:text-base font-semibold ">
                           Total Delivered
@@ -364,7 +364,7 @@ const AdminTabs = ({ allOrderProducts }) => {
                     <div className="w-full shadow-md rounded-md flex flex-col gap-2  md:p-5 px-4 py-5 bg-white">
                       <div className="rounded-lg flex items-center gap-1">
                         <div className="rounded-lg text-black text-base ">
-                          <IoBagOutline className="font-semibold" />
+                          {/* <IoBagOutline className="font-semibold" /> */}
                         </div>
                         <h3 className="text-sm md:text-base font-semibold ">
                           Total Pending
