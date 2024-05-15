@@ -72,7 +72,7 @@ const OrderCompleteModal = ({
   //   console.log(dataFetch());
   return (
     <div className="fixed z-[100] flex flex-col items-center justify-center inset-0 bg-black/10 duration-100 ">
-      <div className="max-w-2xl rounded-sm bg-white p-10 scale-1 opacity-1 duration-200">
+      <div className="max-w-2xl bg-white rounded-lg shadow-xl lg:w-2/5 w-4/5 lg:p-10 p-4 scale-1 opacity-1 duration-200">
         <div className="rounded-lg">
           <button
             onClick={onClose}
@@ -80,7 +80,7 @@ const OrderCompleteModal = ({
           >
             <GiCancel />
           </button>
-          <div>
+          <div className="">
             <div className="overflow-x-auto">
               <table className="table">
                 <thead>
@@ -96,7 +96,7 @@ const OrderCompleteModal = ({
                 {data?.products?.map((dd, id) => (
                   <tr
                     key={dd._id}
-                    className="flex justify-between m-auto gap-14 py-2 mx-5"
+                    className="flex justify-between m-auto gap-14 py-2 lg:mx-5 mx-2"
                   >
                     <td className="whitespace-nowrap">{dd?.name}</td>
                     <td>{dd?.quantity}</td>

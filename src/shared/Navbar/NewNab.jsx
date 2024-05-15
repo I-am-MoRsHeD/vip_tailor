@@ -210,16 +210,16 @@ const NewNav = () => {
         {user ? (
           <button
             onClick={handleLogout}
-            className="lg:bg-white mb-2 lg:mb-0 bg-yellow-950 lg:text-black text-white text-base xl:text-lg font-semibold px-2 py-1 rounded "
+            className="lg:bg-white mb-2 lg:mb-0 bg-yellow-950 lg:text-black text-white text-base xl:text-lg font-semibold px-4 py-3 rounded "
           >
-            Logout
+            Log Out
           </button>
         ) : (
           <Link
             to="/login"
-            className="lg:bg-white mb-2 lg:mb-0 bg-yellow-950 lg:text-black text-white text-base xl:text-lg font-semibold px-2 py-1 rounded"
+            className="lg:bg-white mb-2 lg:mb-0 bg-yellow-950 lg:text-black text-white text-base xl:text-lg font-semibold px-4 py-2 rounded"
           >
-            Log in
+            Log In
           </Link>
         )}
       </li>
@@ -227,7 +227,7 @@ const NewNav = () => {
         {!user ? (
           <Link
             to="/register"
-            className="lg:bg-white bg-yellow-950 lg:text-black text-white text-base xl:text-lg font-semibold px-2 py-1 rounded "
+            className="lg:bg-white bg-yellow-950 lg:text-black text-white text-base xl:text-lg font-semibold px-4 py-2  rounded "
           >
             Registration
           </Link>
@@ -279,12 +279,12 @@ const NewNav = () => {
               </ul>
             </div>
             <a className="text-white lg:text-[1.3rem] font-semibold md:ml-0 mr-4">
-              VIP TAIRLORS
+              VIP TAILORS
             </a>
           </div>
           <div className="my-auto">
             <a className="text-white lg:text-[1.3rem] font-semibold hidden lg:block text-center">
-              VIP TAIRLORS
+              VIP TAILORS
             </a>
           </div>
           <div className="hidden lg:block">

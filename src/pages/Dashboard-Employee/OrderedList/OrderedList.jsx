@@ -123,20 +123,14 @@ const OrderedList = () => {
         <div className="grid lg:grid-cols-2 grid-cols-1 justify-between items-center my-2 rounded-md gap-2">
           <div className="bg-white p-2 md:p-5 rounded-md flex flex-col lg:justify-start lg:items-start  items-center justify-center gap-2">
             <h1 className="text-xs md:text-sm font-semibold flex items-center justify-start gap-1">
-              <span>
-                <FaSortAmountUpAlt />
-              </span>
-              Total Product Amount
+              <span>{/* <FaSortAmountUpAlt /> */}</span>
+              Total Product Amount (BDT)
             </h1>
-            <h1 className="font-semibold text-xl md:text-2xl">
-              {totalAmount} BDT
-            </h1>
+            <h1 className="font-semibold text-xl md:text-2xl">{totalAmount}</h1>
           </div>
           <div className="bg-white p-2 md:p-5 rounded-md flex flex-col lg:justify-start lg:items-start  items-center justify-center gap-2 ">
             <h1 className="text-xs md:text-sm font-semibold flex items-center justify-start">
-              <span>
-                <MdLocalMall />
-              </span>
+              <span>{/* <MdLocalMall /> */}</span>
               Total Quantity
             </h1>
             <h1 className="font-semibold text-xl md:text-2xl">
@@ -163,7 +157,7 @@ const OrderedList = () => {
               Completed
             </Tab>
           </TabList>
-          <div className="bg-white lg:py-5 py-2 rounded-md">
+          <div className="bg-white lg:py-5 py-2 rounded-md h-[100vh]">
             {/* search bar */}
             <div className="form-control lg:w-1/2 w-[95%] mx-auto lg:mb-5 mb-2">
               <input

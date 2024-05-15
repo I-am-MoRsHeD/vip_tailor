@@ -89,8 +89,8 @@ const Registation = () => {
 
   return (
     <div className=" font-Montserrat w-full">
-      <div className="bg-[#e5e4e4] w-full text-center py-12 text-[#403030] flex justify-center items-center">
-        <h1 className="text-4xl font-bold mt-10">Register Now</h1>
+      <div className="bg-[#e5e4e4] w-full text-center lg:py-12 py-5 text-[#403030] flex justify-center items-center">
+        <h1 className="lg:text-4xl text-2xl font-bold mt-10">Register Now</h1>
       </div>
       <div className="flex md:bg-white bg-[#F3F3F3] items-center justify-center h-full py-8 rounded-lg">
         <div className="flex flex-col w-full md:w-[768px] ">

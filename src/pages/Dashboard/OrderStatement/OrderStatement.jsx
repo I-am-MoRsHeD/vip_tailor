@@ -77,7 +77,7 @@ const OrderStatement = () => {
         <div className="px-3 lg:w-6/12 mx-auto text-center mb-7">
           <SectionTitle title="Statement Pieces" />
         </div>
-        <div className="overflow-x-auto">
+        <div className="overflow-x-auto h-[54vh]">
           <table className="table">
             {/* head */}
             <thead>

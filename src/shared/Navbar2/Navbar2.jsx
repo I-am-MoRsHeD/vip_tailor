@@ -74,9 +74,10 @@ const Navbar2 = () => {
         <div className="">
           <button
             onClick={handleLogout}
-            className="lg:bg-white whitespace-nowrap mb-2 lg:mb-0 bg-yellow-950 lg:text-black text-white text-base lg:text-lg font-semibold px-2 py-1 rounded flex items-center justify-center gap-1"
+            className="lg:bg-white whitespace-nowrap mb-2 lg:mb-0 bg-yellow-950 lg:text-black text-white text-base lg:text-lg font-semibold px-5 py-2 rounded flex items-center justify-center gap-1"
           >
-            <IoPersonOutline className="text-xl" /> Logout
+            {/* <IoPersonOutline className="text-xl" /> */}
+            Log Out
           </button>
         </div>
       </div>

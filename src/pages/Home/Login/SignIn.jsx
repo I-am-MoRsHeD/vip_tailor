@@ -62,8 +62,8 @@ const SignIn = () => {
       {/* <Helmet>
                 <title>JobsWorld | Login </title>
             </Helmet> */}
-      <div className="bg-[#e5e4e4] w-full text-center py-12 text-[#403030] flex justify-center items-center">
-        <h1 className="text-4xl font-bold mt-10">Log In</h1>
+      <div className="bg-[#e5e4e4] text-center mt-12 md:mt-20 lg:mt-16 py-3 md:py-10 w-full text-[#403030] flex justify-center items-center">
+        <h1 className="lg:text-4xl text-2xl font-bold ">Log In</h1>
       </div>
       <div className="flex md:bg-white bg-[#F3F3F3] items-center justify-center h-full py-8 rounded-lg">
         <div className=" flex flex-col w-full md:w-[768px] ">
