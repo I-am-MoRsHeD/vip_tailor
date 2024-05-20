@@ -43,39 +43,50 @@ const OrderedProduct = () => {
 
   const onSubmit = async (data) => {
     try {
+      const defaultImageUrl =
+        "https://i.ibb.co/ZBbb1JH/blank-profile-picture.png";
       const photoURL = data?.image?.[0];
-      const img_url = await imageUpload(photoURL);
-      const formdata = {
+
+      const img_url = photoURL ? await imageUpload(photoURL) : null;
+      const imageUrl = img_url?.data?.display_url || defaultImageUrl;
+
+      const formData = {
         ...data,
         email: user?.email,
-        image: img_url?.data?.display_url,
+        image: imageUrl,
         status: "pending",
       };
-      // console.log(formdata);
-      const res = await axiosPublic.post("/orderProduct", formdata);
+
+      const res = await axiosPublic.post("/orderProduct", formData);
+
+      const messageConfig = {
+        position: "top-end",
+        showConfirmButton: false,
+        timer: 1500,
+      };
+      // console.log(res);
       if (res.data.message === "Success") {
         Swal.fire({
-          title: "Congratulations!",
-          text: "Order Product Added Successfully.",
-          confirmButtonText: "Return",
-          showConfirmButton: true,
-          confirmButtonColor: "#403030",
-          imageUrl: "https://i.ibb.co/G0DfFjk/Character.png",
-          imageWidth: 220,
-          imageHeight: 200,
-          imageAlt: "Custom image",
+          ...messageConfig,
+          icon: "success",
+          title: "Product added successfully",
         });
       } else {
         Swal.fire({
-          position: "top-end",
+          ...messageConfig,
           icon: "error",
           title: "Product Code has already been taken",
-          showConfirmButton: false,
-          timer: 1500,
         });
       }
     } catch (error) {
       console.error("Error adding product:", error);
+      Swal.fire({
+        position: "top-end",
+        icon: "error",
+        title: "An error occurred while adding the product",
+        showConfirmButton: false,
+        timer: 1500,
+      });
     }
   };
 
