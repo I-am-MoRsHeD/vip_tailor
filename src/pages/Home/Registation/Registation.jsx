@@ -48,7 +48,7 @@ const Registation = () => {
             showConfirmButton: false,
             timer: 1500,
           });
-          // navigate("/message");
+          navigate("/message");
         }
       });
       console.log(resN);

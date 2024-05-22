@@ -7,12 +7,10 @@ import Registation from "../pages/Home/Registation/Registation.jsx";
 import AdminHome from "../pages/Dashboard/AdminHome/AdminHome.jsx";
 import ContactUs from "../pages/ContactUs/ContactUs.jsx";
 import OrderedProduct from "../pages/Dashboard-Employee/OrderedProduct/OrderedProduct.jsx";
-import EmployeeHome from "../pages/Dashboard-Employee/EmployeeHome/EmployeeHome.jsx";
 import OrderedList from "../pages/Dashboard-Employee/OrderedList/OrderedList.jsx";
 import MembersRequest from "../pages/Dashboard/MembersRequest/MembersRequest.jsx";
 import AllMembers from "../pages/Dashboard/AllMembers/AllMembers.jsx";
 import Errorpage from "../pages/ErrorPage/Errorpage.jsx";
-import EmployeeRoute from "./EmployeeRoute.jsx";
 import AdminRoute from "./AdminRoute.jsx";
 import ProductStatement from "../pages/Dashboard/ProductStatement/ProductStatement.jsx";
 import OrderStatement from "../pages/Dashboard/OrderStatement/OrderStatement.jsx";
@@ -63,19 +61,31 @@ const router = createBrowserRouter([
   {
     path: "/",
     element: <Home />,
+    errorElement: <Errorpage></Errorpage>,
     children: [
-      // admin routes
       {
         path: "adminHome",
-        element: <AdminHome></AdminHome>,
+        element: (
+          <AdminRoute>
+            <AdminHome></AdminHome>,
+          </AdminRoute>
+        ),
       },
       {
         path: "addProduct",
-        element: <AddProduct></AddProduct>,
+        element: (
+          <AdminRoute>
+            <AddProduct></AddProduct>,
+          </AdminRoute>
+        ),
       },
       {
         path: "addCategory",
-        element: <AddCategory></AddCategory>,
+        element: (
+          <AdminRoute>
+            <AddCategory></AddCategory>,
+          </AdminRoute>
+        ),
       },
       {
         path: "productStatement",
@@ -117,45 +127,45 @@ const router = createBrowserRouter([
           </AdminRoute>
         ),
       },
-      // employee routes
+
       {
-        path: "employeeHome",
+        path: "productList",
         element: (
-          <EmployeeRoute>
-            <EmployeeHome></EmployeeHome>
-          </EmployeeRoute>
+          <AdminRoute>
+            <ProductDetails />,
+          </AdminRoute>
         ),
       },
       {
-        path: "productList",
-        element: <ProductDetails />,
-      },
-      {
         path: "addToCart",
-        element: <AddToCart />,
+        element: (
+          <AdminRoute>
+            <AddToCart />,
+          </AdminRoute>
+        ),
       },
       {
         path: "addProduct",
         element: (
-          <EmployeeRoute>
+          <AdminRoute>
             <AddProduct></AddProduct>
-          </EmployeeRoute>
+          </AdminRoute>
         ),
       },
       {
         path: "ordered",
         element: (
-          <EmployeeRoute>
+          <AdminRoute>
             <OrderedProduct></OrderedProduct>
-          </EmployeeRoute>
+          </AdminRoute>
         ),
       },
       {
         path: "orderedList",
         element: (
-          <EmployeeRoute>
+          <AdminRoute>
             <OrderedList></OrderedList>
-          </EmployeeRoute>
+          </AdminRoute>
         ),
       },
     ],
