@@ -39,19 +39,21 @@ const Registation = () => {
         displayName: form.name.value,
         photoURL: "https://i.ibb.co/wzY7xRG/bronze.png",
       });
-      const resN = await axiosPublic.post("/user", userInfo).then((res) => {
-        if (res.data.success === "Success") {
-          Swal.fire({
-            position: "top-end",
-            icon: "success",
-            title: "Successfully registered",
-            showConfirmButton: false,
-            timer: 1500,
-          });
-          // navigate("/message");
-        }
-      });
-      console.log(resN);
+      await axiosPublic.post("/user", userInfo)
+        .then((res) => {
+          console.log(res);
+          if (res.status === 200) {
+            Swal.fire({
+              position: "top-end",
+              icon: "success",
+              title: "Successfully registered",
+              showConfirmButton: false,
+              timer: 1500,
+            });
+            navigate("/message");
+          }
+        });
+      // console.log(resN);
       await getToken(result?.user?.email);
     } catch (error) {
       console.log(error);

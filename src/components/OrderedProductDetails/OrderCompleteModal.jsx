@@ -3,30 +3,36 @@ import Swal from "sweetalert2";
 import { GiCancel } from "react-icons/gi";
 import useAxiosPublic from "../../hooks/useAxiosPublic";
 
-const OrderCompleteModal = ({
-  data,
-  onClose,
-  refetchData,
-  complete,
-  dataFetch,
-  setOrderData,
-}) => {
+const OrderCompleteModal = ({ data, onClose, refetchData, complete, dataFetch, setOrderData, }) => {
   const axios = useAxiosPublic();
   const [orderId, setOrderId] = useState();
+  const [totalAmount, setTotalAmount] = useState(
+    data?.products?.reduce((total, product) => total + product?.price * product?.quantity, 0) || 0
+  );
+  const [dueAmount, setDueAmount] = useState();
   const [productStatuses, setProductStatuses] = useState(
     data?.products?.map((product) => product?.productStatus) || []
   );
 
   useEffect(() => setOrderId(data?._id), [data]);
 
-  const handleComplete = async (productId) => {
+  const handleComplete = async (product) => {
+    console.log(product)
     try {
-      const url = `/orderProduct/orderId/${orderId}/productStatus/${productId}`;
+      const url = `/orderProduct/orderId/${orderId}/productStatus/${product?._id}`;
+
+      // updating status
       const updatedStatuses = productStatuses?.map((status, index) =>
-        data?.products[index]?._id === productId ? "complete" : status
+        data?.products[index]?._id === product?._id ? "complete" : status
       );
       setProductStatuses(updatedStatuses);
 
+      // update due amount
+      const totalProductPrice = product?.price * product?.quantity
+      const dueAmountPrice = totalAmount - totalProductPrice;
+      setDueAmount(dueAmountPrice);
+
+      // requesting for patch
       const res = await axios.patch(url);
       if (res.data.message === "success") {
         Swal.fire({
@@ -67,14 +73,20 @@ const OrderCompleteModal = ({
 
   return (
     <div className="fixed z-50 flex items-center justify-center inset-0 bg-black/50">
-      <div className="bg-white rounded-lg shadow-xl w-full max-w-2xl p-4 md:p-8">
-        <div className="relative">
+      <div className="bg-white rounded-lg shadow-xl w-full max-w-2xl">
+        <div className="relative  px-8 pt-2">
           <button
             onClick={onClose}
             className="absolute top-2 right-2 text-lg text-[#1D2A3B]"
           >
             <GiCancel />
           </button>
+          <div className="flex justify-between pt-5 border-b-2 border-black">
+            <h1 className="text-base font-semibold">Total Due: {dueAmount}</h1>
+            <h1 className="text-base font-semibold">Total Amount: {totalAmount} </h1>
+          </div>
+        </div>
+        <div className="relative m-4 md:m-8">
           <div className="mt-8">
             <div className="overflow-x-auto">
               <table className="table-auto w-full text-left">
@@ -93,12 +105,25 @@ const OrderCompleteModal = ({
                       <td className="py-2 px-4">{product?.quantity}</td>
                       <td className="py-2 px-4">{productStatuses[index]}</td>
                       <td className="py-2 px-4">
+                        {/* {product?.productStatus === 'complete' ? <button
+                          className="rounded-lg font-bold btn-disabled text-black px-3 py-2 bg-blue-500"
+                        >
+                          Completed
+                        </button>
+                          :
+                          <button
+                            onClick={() => handleComplete(product)}
+                            className="rounded-lg text-white px-4 py-2 bg-blue-500 hover:bg-blue-600"
+                          >
+                            Complete
+                          </button>} */}
                         <button
-                          onClick={() => handleComplete(product?._id)}
-                          className="rounded-lg text-white px-4 py-2 bg-blue-500"
+                          onClick={() => handleComplete(product)}
+                          className="rounded-lg text-white px-4 py-2 bg-blue-500 hover:bg-blue-600"
                         >
                           Complete
                         </button>
+
                       </td>
                     </tr>
                   ))}

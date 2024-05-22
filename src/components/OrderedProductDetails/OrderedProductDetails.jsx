@@ -21,7 +21,7 @@ const OrderedProductDetails = ({
     setSelectedData(product);
     setOpenModal(true);
   };
-
+  console.log(selectedData)
   const handleCloseModal = () => {
     setOpenModal(false);
   };
@@ -97,7 +97,7 @@ const OrderedProductDetails = ({
                       <button
                         onClick={() => handleCompleteModal(product)}
                         // onClick={() => handleComplete(product)}
-                        className="btn btn-xs btn-accent"
+                        className="btn btn-xs text-white bg-blue-500 hover:bg-blue-600"
                       >
                         Complete
                       </button>
