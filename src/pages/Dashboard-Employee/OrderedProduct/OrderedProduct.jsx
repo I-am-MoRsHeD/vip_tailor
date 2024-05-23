@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import { useForm, useFieldArray } from "react-hook-form";
+import React, { useEffect, useState } from "react";
+import { useForm, useFieldArray, useWatch } from "react-hook-form";
 import SectionTitle from "../../../components/SectionTitle/SectionTitle";
 import { TiDeleteOutline } from "react-icons/ti";
 import useAxiosPublic from "../../../hooks/useAxiosPublic";
@@ -13,14 +13,23 @@ import { imageUpload } from "../../../components/utils/utils";
 const OrderedProduct = () => {
   const axiosPublic = useAxiosPublic();
   const { user } = useAuth();
-  const { register, handleSubmit, control } = useForm({
+  const [totalQuantity, setTotalQuantity] = useState(0);
+  const [totalAmount, setTotalAmount] = useState(0);
+
+  const { register, handleSubmit, control, reset } = useForm({
     defaultValues: {
       products: [
         { name: "", quantity: "", price: "", productStatus: "pending" },
       ],
     },
   });
+
   const { fields, append, remove } = useFieldArray({
+    control,
+    name: "products",
+  });
+
+  const watchProducts = useWatch({
     control,
     name: "products",
   });
@@ -41,12 +50,17 @@ const OrderedProduct = () => {
     },
   });
 
+  const messageConfig = {
+    position: "top-end",
+    showConfirmButton: false,
+    timer: 1500,
+  };
+
   const onSubmit = async (data) => {
     try {
       const defaultImageUrl =
         "https://i.ibb.co/ZBbb1JH/blank-profile-picture.png";
       const photoURL = data?.image?.[0];
-
       const img_url = photoURL ? await imageUpload(photoURL) : null;
       const imageUrl = img_url?.data?.display_url || defaultImageUrl;
 
@@ -57,20 +71,25 @@ const OrderedProduct = () => {
         status: "pending",
       };
 
+      if (data.advancedAmount < 0 || data.advancedAmount > totalAmount) {
+        return Swal.fire({
+          ...messageConfig,
+          icon: "error",
+          title: "Advanced Amount is wrong",
+        });
+      }
+
       const res = await axiosPublic.post("/orderProduct", formData);
 
-      const messageConfig = {
-        position: "top-end",
-        showConfirmButton: false,
-        timer: 1500,
-      };
-      // console.log(res);
       if (res.data.message === "Success") {
         Swal.fire({
           ...messageConfig,
           icon: "success",
           title: "Product added successfully",
         });
+        reset();
+        setTotalQuantity(0);
+        setTotalAmount(0);
       } else {
         Swal.fire({
           ...messageConfig,
@@ -90,6 +109,20 @@ const OrderedProduct = () => {
     }
   };
 
+  useEffect(() => {
+    const totalQty = watchProducts?.reduce(
+      (acc, curr) => acc + parseInt(curr.quantity || 0),
+      0
+    );
+    const totalAmt = watchProducts?.reduce(
+      (acc, curr) =>
+        acc + parseFloat(curr.price || 0) * parseInt(curr.quantity || 0),
+      0
+    );
+    setTotalQuantity(totalQty);
+    setTotalAmount(totalAmt);
+  }, [watchProducts]);
+
   return (
     <div className="overflow-scroll 2xl:h-[80vh] lg:h-[85vh] lg:ml-10 mx-3 lg:mx-0">
       <div className="mb-2">
@@ -106,7 +139,9 @@ const OrderedProduct = () => {
               {fields.map((product, index) => (
                 <div key={product.id} className="flex gap-2 w-full">
                   <input
-                    {...register(`products[${index}].name`, { required: true })}
+                    {...register(`products[${index}].name`, {
+                      required: true,
+                    })}
                     type="text"
                     placeholder="Product Name*"
                     className="input input-bordered w-4/6 focus:outline-none bg-[#F0F2F5] placeholder:text-black"
@@ -114,6 +149,7 @@ const OrderedProduct = () => {
                   <input
                     {...register(`products[${index}].quantity`, {
                       required: true,
+                      valueAsNumber: true,
                     })}
                     type="number"
                     placeholder="Quantity"
@@ -122,6 +158,7 @@ const OrderedProduct = () => {
                   <input
                     {...register(`products[${index}].price`, {
                       required: true,
+                      valueAsNumber: true,
                     })}
                     type="number"
                     placeholder="Price*"
@@ -138,14 +175,20 @@ const OrderedProduct = () => {
                 </div>
               ))}
             </div>
-            <div className="flex justify-center">
-              <button
-                type="button"
-                className="text-4xl text-center"
-                onClick={handleAddProduct}
-              >
-                <CiCirclePlus />
-              </button>
+            <div className="flex">
+              <div className="w-7/12 flex justify-center items-center">
+                <button
+                  type="button"
+                  className="text-4xl text-center"
+                  onClick={handleAddProduct}
+                >
+                  <CiCirclePlus />
+                </button>
+              </div>
+              <div className="w-5/12 flex justify-evenly">
+                <div>Total Quantity: {totalQuantity}</div>
+                <div>Total Amount: {totalAmount}</div>
+              </div>
             </div>
             <div className="grid lg:grid-cols-3 grid-cols-1 lg:gap-4 gap-1 lg:mb-2 mb-1">
               <div className="form-control w-full my-1">
@@ -179,26 +222,7 @@ const OrderedProduct = () => {
                 </select>
               </div>
             </div>
-            {/* <div className="grid lg:grid-cols-2 grid-cols-1 lg:gap-4 gap-1 lg:mb-2 mb-1">
-              <div className="form-control w-full my-1">
-                <input
-                  {...register("price", { required: true })}
-                  type="number"
-                  placeholder="Price*"
-                  min={1}
-                  className="input input-bordered w-full focus:outline-none bg-[#F0F2F5] placeholder:text-black"
-                />
-              </div>
-              <div className="form-control w-full my-1">
-                <input
-                  {...register("advancedAmount", { required: true })}
-                  type="number"
-                  placeholder="Advanced Amount*"
-                  min={1}
-                  className="input input-bordered w-full focus:outline-none bg-[#F0F2F5] placeholder:text-black"
-                />
-              </div>
-            </div> */}
+
             <div className="grid lg:grid-cols-2 grid-cols-1 lg:gap-4 gap-1 lg:mb-2 mb-1">
               <div className="form-control w-full my-1">
                 <span className="text-xs">Ordered Date*</span>
