@@ -81,7 +81,7 @@ const OrderCompleteModal = ({ data, onClose, refetchData, complete, dataFetch, s
           >
             <GiCancel />
           </button>
-          <div className="flex justify-between pt-4 border-b-2 border-black">
+          <div className="flex justify-between pt-5 border-b-2 border-black">
             <h1 className="text-base font-semibold">Total Due: {dueAmount}</h1>
             <h1 className="text-base font-semibold">Total Amount: {totalAmount} </h1>
           </div>
