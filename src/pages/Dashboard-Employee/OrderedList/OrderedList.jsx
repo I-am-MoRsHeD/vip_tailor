@@ -15,7 +15,6 @@ const OrderedList = () => {
   const [searchValue, setSearchValue] = useState("");
   const [status, setStatus] = useState("pending");
   const [allData, setAllData] = useState();
-  // const [orderData, setOrderData] = useState();
   const axiosSecure = useAxiosSecure();
   const axiosPublic = useAxiosPublic();
   const [orderProducts, dataFetch = refetch] = useOrderedProduct();
@@ -40,11 +39,7 @@ const OrderedList = () => {
   });
   const role = userInfo?.role;
 
-  const {
-    data: orderBySearch = [],
-    refetch,
-    isLoading,
-  } = useQuery({
+  const { data: orderBySearch = [], refetch, isLoading, } = useQuery({
     queryKey: [
       "orderBySearch",
       email,
@@ -54,7 +49,6 @@ const OrderedList = () => {
       currentPage,
       status,
     ],
-
     queryFn: async () => {
       const res = await axiosPublic.get(
         `/orderProduct/1/search?email=${email}&searchValue=${searchValue}&itemsPerPage=${itemsPerPage}&currentPage=${currentPage}&status=${status}`
@@ -62,6 +56,14 @@ const OrderedList = () => {
       return res.data;
     },
   });
+  // calculation of totalAmount
+  const [totalAmount, setTotalAmount] = useState(
+    orderBySearch?.items?.reduce((total, product) => total + product?.totalAmount, 0)
+  );
+  // calculation of quantity
+  const [totalQuantity, setTotalQuantity] = useState(
+    orderBySearch?.items?.reduce((total, product) => total + product?.products?.reduce((total, pp) => total + pp?.quantity, 0), 0)
+  );
 
   useEffect(() => {
     if (orderBySearch && orderBySearch?.totalCount) {
@@ -89,32 +91,32 @@ const OrderedList = () => {
     }
   }, [orderProducts, status]);
 
-  let totalQuantity = 0;
-  let totalAmount = 0;
+  // let totalQuantity = 0;
+  // let totalAmount = 0;
 
-  if (allData && Array.isArray(allData)) {
-    totalQuantity = allData?.reduce((total, item) => {
-      if (item?.products && Array.isArray(item?.products)) {
-        return (
-          total +
-          item?.products.reduce((acc, product) => acc + product?.quantity, 0)
-        );
-      } else {
-        return total;
-      }
-    }, 0);
+  // if (allData && Array.isArray(allData)) {
+  //   totalQuantity = allData?.reduce((total, item) => {
+  //     if (item?.products && Array.isArray(item?.products)) {
+  //       return (
+  //         total +
+  //         item?.products.reduce((acc, product) => acc + product?.quantity, 0)
+  //       );
+  //     } else {
+  //       return total;
+  //     }
+  //   }, 0);
 
-    totalAmount = allData?.reduce((total, item) => {
-      if (item?.products && Array.isArray(item.products)) {
-        return (
-          total +
-          item?.products.reduce((acc, product) => acc + product?.price, 0)
-        );
-      } else {
-        return total;
-      }
-    }, 0);
-  }
+  //   totalAmount = allData?.reduce((total, item) => {
+  //     if (item?.products && Array.isArray(item.products)) {
+  //       return (
+  //         total +
+  //         item?.products.reduce((acc, product) => acc + product?.price, 0)
+  //       );
+  //     } else {
+  //       return total;
+  //     }
+  //   }, 0);
+  // }
 
   return (
     <div className="overflow-scroll 2xl:h-[80vh] lg:h-[84.5vh] mx-3 lg:mx-0">
@@ -177,7 +179,7 @@ const OrderedList = () => {
                     currentPage={currentPage}
                     setCurrentPage={setCurrentPage}
                     totalPages={totalPages}
-                    refetch={refetch}
+                    refetchByPending={refetch}
                     dataFetch={dataFetch}
                   />
                 </div>
@@ -191,7 +193,7 @@ const OrderedList = () => {
                     currentPage={currentPage}
                     setCurrentPage={setCurrentPage}
                     totalPages={totalPages}
-                    refetch={refetch}
+                    refetchByComplete={refetch}
                     dataFetch={dataFetch}
                   />
                 </div>

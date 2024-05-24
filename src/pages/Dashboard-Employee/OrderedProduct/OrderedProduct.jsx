@@ -64,8 +64,13 @@ const OrderedProduct = () => {
       const img_url = photoURL ? await imageUpload(photoURL) : null;
       const imageUrl = img_url?.data?.display_url || defaultImageUrl;
 
+      const advancedAmount = data?.advancedAmount;
+      const dueAmount = totalAmount - advancedAmount;
+
       const formData = {
         ...data,
+        dueAmount,
+        totalAmount,
         email: user?.email,
         image: imageUrl,
         status: "pending",
@@ -153,6 +158,7 @@ const OrderedProduct = () => {
                     })}
                     type="number"
                     placeholder="Quantity"
+                    min={1}
                     className="input input-bordered w-1/6 focus:outline-none bg-[#F0F2F5] placeholder:text-black"
                   />
                   <input
@@ -214,11 +220,12 @@ const OrderedProduct = () => {
                   className="select select-bordered w-full focus:outline-none bg-[#F0F2F5]"
                   {...register("category", { required: true })}
                 >
-                  {categories.map((category) => (
-                    <option value={category.category} key={category._id}>
+                  {/* {categories.map((category) => (
+                    <option  value={category.category} key={category._id}>
                       {category.category}
                     </option>
-                  ))}
+                  ))} */}
+                  <option value="factory">factory</option>
                 </select>
               </div>
             </div>

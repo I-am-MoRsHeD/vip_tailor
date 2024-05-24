@@ -10,7 +10,8 @@ const OrderedProductDetails = ({
   currentPage,
   setCurrentPage,
   totalPages,
-  refetch,
+  refetchByComplete,
+  refetchByPending,
   orderProducts,
   dataFetch,
 }) => {
@@ -21,7 +22,7 @@ const OrderedProductDetails = ({
     setSelectedData(product);
     setOpenModal(true);
   };
-  console.log(selectedData)
+
   const handleCloseModal = () => {
     setOpenModal(false);
   };
@@ -78,10 +79,11 @@ const OrderedProductDetails = ({
                   <>
                     <td>{product?.advancedAmount}</td>
                     <td>
-                      {calculateDueAmount(
+                      {/* {calculateDueAmount(
                         product?.products,
                         product?.advancedAmount
-                      )}
+                      )} */}
+                      {product?.dueAmount}
                     </td>
                   </>
                 )}
@@ -120,7 +122,7 @@ const OrderedProductDetails = ({
         <OrderCompleteModal
           data={selectedData}
           onClose={handleCloseModal}
-          refetchData={refetch}
+          refetchData={refetchByPending}
           complete={handleCompleteModal}
           dataFetch={dataFetch}
         />

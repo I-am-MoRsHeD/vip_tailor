@@ -38,33 +38,39 @@ const OrderStatement = () => {
       }
     });
   };
-  let totalQuantity = 0;
-  let totalAmount = 0;
-  // console.log(orderProducts);
 
-  if (orderProducts?.items && Array.isArray(orderProducts?.items)) {
-    totalQuantity = orderProducts?.items?.reduce((total, item) => {
-      if (item?.products && Array.isArray(item?.products)) {
-        return (
-          total +
-          item?.products.reduce((acc, product) => acc + product?.quantity, 0)
-        );
-      } else {
-        return total;
-      }
-    }, 0);
+  // calculation of quantity
+  const [totalQuantity, setTotalQuantity] = useState(
+    orderProducts?.items?.reduce((total, product) => total + product?.products?.map(pp => pp?.quantity), 0)
+  );
 
-    totalAmount = orderProducts?.items?.reduce((total, item) => {
-      if (item?.products && Array.isArray(item.products)) {
-        return (
-          total +
-          item?.products.reduce((acc, product) => acc + product?.price, 0)
-        );
-      } else {
-        return total;
-      }
-    }, 0);
-  }
+  // let totalQuantity = 0;
+  // let totalAmount = 0;
+  // // console.log(orderProducts);
+
+  // if (orderProducts?.items && Array.isArray(orderProducts?.items)) {
+  //   totalQuantity = orderProducts?.items?.reduce((total, item) => {
+  //     if (item?.products && Array.isArray(item?.products)) {
+  //       return (
+  //         total +
+  //         item?.products.reduce((acc, product) => acc + product?.quantity, 0)
+  //       );
+  //     } else {
+  //       return total;
+  //     }
+  //   }, 0);
+
+  //   totalAmount = orderProducts?.items?.reduce((total, item) => {
+  //     if (item?.products && Array.isArray(item.products)) {
+  //       return (
+  //         total +
+  //         item?.products.reduce((acc, product) => acc + product?.price, 0)
+  //       );
+  //     } else {
+  //       return total;
+  //     }
+  //   }, 0);
+  // }
   return (
     <div className="overflow-scroll 2xl:h-[80vh] lg:h-[84.5vh] lg:ml-3 xl:ml-9 mx-3 lg:mx-0">
       <div className="mb-2">
@@ -97,7 +103,7 @@ const OrderStatement = () => {
                   key={product?._id}
                 >
                   <td className="p-auto md:p-0">{ind + 1}</td>
-                  <td>{product?.productCode}</td>
+                  <td>{product?.invoiceNo}</td>
                   <td>
                     <div className="flex items-center gap-3">
                       <div>
@@ -107,8 +113,10 @@ const OrderStatement = () => {
                       </div>
                     </div>
                   </td>
-                  <td>{totalQuantity}</td>
-                  <td>{totalAmount}</td>
+                  <td>
+                    {product?.products?.reduce((total, pp) => total + pp?.quantity, 0)}
+                  </td>
+                  <td>{product?.totalAmount}</td>
                   <td>
                     <button
                       onClick={() => handleDelete(product)}

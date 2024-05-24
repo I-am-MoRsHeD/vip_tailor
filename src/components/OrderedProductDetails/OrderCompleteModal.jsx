@@ -1,15 +1,15 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import Swal from "sweetalert2";
 import { GiCancel } from "react-icons/gi";
 import useAxiosPublic from "../../hooks/useAxiosPublic";
 
 const OrderCompleteModal = ({ data, onClose, refetchData, complete, dataFetch, setOrderData, }) => {
   const axios = useAxiosPublic();
+  const [input, setInput] = useState();
   const [orderId, setOrderId] = useState();
   const [totalAmount, setTotalAmount] = useState(
     data?.products?.reduce((total, product) => total + product?.price * product?.quantity, 0) || 0
   );
-  const [dueAmount, setDueAmount] = useState();
   const [productStatuses, setProductStatuses] = useState(
     data?.products?.map((product) => product?.productStatus) || []
   );
@@ -17,7 +17,7 @@ const OrderCompleteModal = ({ data, onClose, refetchData, complete, dataFetch, s
   useEffect(() => setOrderId(data?._id), [data]);
 
   const handleComplete = async (product) => {
-    console.log(product)
+
     try {
       const url = `/orderProduct/orderId/${orderId}/productStatus/${product?._id}`;
 
@@ -28,17 +28,26 @@ const OrderCompleteModal = ({ data, onClose, refetchData, complete, dataFetch, s
       setProductStatuses(updatedStatuses);
 
       // update due amount
-      const totalProductPrice = product?.price * product?.quantity
-      const dueAmountPrice = totalAmount - totalProductPrice;
-      setDueAmount(dueAmountPrice);
+      const paidAmount = parseFloat(input);
 
       // requesting for patch
-      const res = await axios.patch(url);
-      if (res.data.message === "success") {
+      const res = await axios.patch(url, { paidAmount });
+      console.log(res.data);
+      if (res.data.message === 'success') {
+        console.log('attack')
         Swal.fire({
           position: "top-end",
           icon: "success",
           title: "Product marked as complete",
+          showConfirmButton: false,
+          timer: 1500,
+        });
+      }
+      else {
+        Swal.fire({
+          position: "top-end",
+          icon: "error",
+          title: "Please check your due amount first",
           showConfirmButton: false,
           timer: 1500,
         });
@@ -48,7 +57,7 @@ const OrderCompleteModal = ({ data, onClose, refetchData, complete, dataFetch, s
     } catch (error) {
       console.error("Error completing order:", error);
     }
-  };
+  }
 
   const handleCompleteAll = async (id) => {
     try {
@@ -82,7 +91,7 @@ const OrderCompleteModal = ({ data, onClose, refetchData, complete, dataFetch, s
             <GiCancel />
           </button>
           <div className="flex justify-between pt-5 border-b-2 border-black">
-            <h1 className="text-base font-semibold">Total Due: {dueAmount}</h1>
+            <h1 className="text-base font-semibold">Total Due: {data?.dueAmount}</h1>
             <h1 className="text-base font-semibold">Total Amount: {totalAmount} </h1>
           </div>
         </div>
@@ -105,24 +114,39 @@ const OrderCompleteModal = ({ data, onClose, refetchData, complete, dataFetch, s
                       <td className="py-2 px-4">{product?.quantity}</td>
                       <td className="py-2 px-4">{productStatuses[index]}</td>
                       <td className="py-2 px-4">
-                        {/* {product?.productStatus === 'complete' ? <button
+                        {product?.productStatus === 'complete' ? <button
                           className="rounded-lg font-bold btn-disabled text-black px-3 py-2 bg-blue-500"
                         >
                           Completed
                         </button>
                           :
-                          <button
-                            onClick={() => handleComplete(product)}
-                            className="rounded-lg text-white px-4 py-2 bg-blue-500 hover:bg-blue-600"
-                          >
-                            Complete
-                          </button>} */}
-                        <button
+                          <button className="rounded-lg text-white px-4 py-2 bg-blue-500 hover:bg-blue-600" onClick={() => document.getElementById('my_modal_3').showModal()}>Complete</button>}
+
+                        {/* new modal value access div */}
+                        <dialog id="my_modal_3" className="modal">
+                          <div className="modal-box">
+                            <form method="dialog">
+                              <button className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">✕</button>
+                            </form>
+                            <div className="flex flex-col">
+                              <input
+                                value={input} placeholder="Put Your Amount Here" onInput={e => setInput(e.target.value)}
+                                className="my-3 p-4 rounded-md outline-none text-black border border-black" type="text" name="amount" id="" />
+                              <button
+                                onClick={() => handleComplete(product)}
+                                className="rounded-lg text-white px-4 py-2 bg-blue-500 hover:bg-blue-600"
+                              >
+                                Complete
+                              </button>
+                            </div>
+                          </div>
+                        </dialog>
+                        {/* <button
                           onClick={() => handleComplete(product)}
                           className="rounded-lg text-white px-4 py-2 bg-blue-500 hover:bg-blue-600"
                         >
                           Complete
-                        </button>
+                        </button> */}
 
                       </td>
                     </tr>
