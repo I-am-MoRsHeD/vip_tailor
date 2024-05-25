@@ -56,14 +56,6 @@ const OrderedList = () => {
       return res.data;
     },
   });
-  // calculation of totalAmount
-  const [totalAmount, setTotalAmount] = useState(
-    orderBySearch?.items?.reduce((total, product) => total + product?.totalAmount, 0)
-  );
-  // calculation of quantity
-  const [totalQuantity, setTotalQuantity] = useState(
-    orderBySearch?.items?.reduce((total, product) => total + product?.products?.reduce((total, pp) => total + pp?.quantity, 0), 0)
-  );
 
   useEffect(() => {
     if (orderBySearch && orderBySearch?.totalCount) {
@@ -91,8 +83,31 @@ const OrderedList = () => {
     }
   }, [orderProducts, status]);
 
-  // let totalQuantity = 0;
-  // let totalAmount = 0;
+  let totalQuantity = 0;
+  let totalAmount = 0;
+  let totalDue = 0;
+  let totalAdvanced = 0;
+
+  if (allData && Array.isArray(allData)) {
+    totalQuantity = allData?.reduce((total, item) => {
+      return (
+        total +
+        item?.products.reduce((acc, product) => acc + product?.quantity, 0)
+      );
+    }, 0);
+
+    totalAmount = allData?.reduce((total, item) => {
+      return total + item?.totalAmount
+    }, 0);
+
+    totalDue = allData?.reduce((total, item) => {
+      return total + item?.dueAmount
+    }, 0);
+
+    totalAdvanced = allData?.reduce((total, item) => {
+      return total + item?.advancedAmount
+    }, 0);
+  }
 
   // if (allData && Array.isArray(allData)) {
   //   totalQuantity = allData?.reduce((total, item) => {
@@ -119,14 +134,14 @@ const OrderedList = () => {
   // }
 
   return (
-    <div className="overflow-scroll 2xl:h-[80vh] lg:h-[84.5vh] mx-3 lg:mx-0">
+    <div className="overflow-scroll 2xl:h-[80vh] xl:h-[82.6vh] lg:h-[84.5vh] mx-3 lg:mx-0">
       {/* tabs */}
       <div className="lg:ml-3 xl:ml-9 h-full">
-        <div className="grid lg:grid-cols-2 grid-cols-1 justify-between items-center my-2 rounded-md gap-2">
+        <div className="grid lg:grid-cols-4 grid-cols-1 justify-between items-center mb-2 rounded-md gap-2">
           <div className="bg-white p-2 md:p-5 rounded-md flex flex-col lg:justify-start lg:items-start  items-center justify-center gap-2">
             <h1 className="text-xs md:text-sm font-semibold flex items-center justify-start gap-1">
               <span>{/* <FaSortAmountUpAlt /> */}</span>
-              Total Product Amount (BDT)
+              Total Amount (BDT)
             </h1>
             <h1 className="font-semibold text-xl md:text-2xl">{totalAmount}</h1>
           </div>
@@ -137,6 +152,24 @@ const OrderedList = () => {
             </h1>
             <h1 className="font-semibold text-xl md:text-2xl">
               {totalQuantity}
+            </h1>
+          </div>
+          <div className="bg-white p-2 md:p-5 rounded-md flex flex-col lg:justify-start lg:items-start  items-center justify-center gap-2 ">
+            <h1 className="text-xs md:text-sm font-semibold flex items-center justify-start">
+              <span>{/* <MdLocalMall /> */}</span>
+              Total Due
+            </h1>
+            <h1 className="font-semibold text-xl md:text-2xl">
+              {totalDue}
+            </h1>
+          </div>
+          <div className="bg-white p-2 md:p-5 rounded-md flex flex-col lg:justify-start lg:items-start  items-center justify-center gap-2 ">
+            <h1 className="text-xs md:text-sm font-semibold flex items-center justify-start">
+              <span>{/* <MdLocalMall /> */}</span>
+              Total Advanced
+            </h1>
+            <h1 className="font-semibold text-xl md:text-2xl">
+              {totalAdvanced}
             </h1>
           </div>
         </div>

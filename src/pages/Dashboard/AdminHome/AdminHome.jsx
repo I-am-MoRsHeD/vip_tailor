@@ -30,7 +30,7 @@ const AdminHome = () => {
     },
   });
   return (
-    <div className="lg:overflow-scroll 2xl:h-[80vh] xl:h-[84vh] lg:h-[84.5vh] xl:ml-9 mx-3">
+    <div className="lg:overflow-scroll 2xl:h-[80vh] xl:h-[82.8vh] lg:h-[84.5vh] xl:ml-9 mx-3">
       <DashBoardTitle
         title={"Admin"}
         subTitle={"Insights, management tools and add product-all in one place"}

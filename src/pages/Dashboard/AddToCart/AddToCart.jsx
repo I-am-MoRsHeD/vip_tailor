@@ -102,7 +102,7 @@ const AddToCart = () => {
 
   return (
     <>
-      <div className="bg-white overflow-scroll 2xl:h-[80vh] lg:h-[85vh] md:h-[80vh] lg:ml-10 rounded-md mx-3 lg:mx-0">
+      <div className="bg-white overflow-scroll 2xl:h-[80vh] xl:h-[82.6vh] lg:h-[85vh] md:h-[80vh] lg:ml-10 rounded-md mx-3 lg:mx-0">
         <div className="p-2">
           <div>
             {carts?.length > 0 ? (
