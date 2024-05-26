@@ -55,14 +55,14 @@ const SignIn = () => {
     }
   };
 
-  const handleGoogle = async () => {
-    try {
-      const result = await googleSignIn();
-      console.log(result.user);
-    } catch (error) {
-      console.log(error);
-    }
-  };
+  // const handleGoogle = async () => {
+  //   try {
+  //     const result = await googleSignIn();
+  //     console.log(result.user);
+  //   } catch (error) {
+  //     console.log(error);
+  //   }
+  // };
 
   return (
     <div className="font-Montserrat w-full">
