@@ -280,10 +280,10 @@ const ProductDetails = () => {
   }, []);
 
   return (
-    <div className="overflow-scroll 2xl:h-[80vh] lg:h-[84.5vh] mx-3 lg:mx-0">
+    <div className="overflow-scroll 2xl:h-[80vh] xl:h-[82.6vh] lg:h-[84.5vh] mx-3 lg:mx-0">
       <div className="lg:ml-3 xl:ml-9 rounded-md">
         {role === "admin" ? (
-          <div className="grid lg:grid-cols-2 grid-cols-1 justify-between items-center my-2 rounded-md gap-2">
+          <div className="grid lg:grid-cols-2 grid-cols-1 justify-between items-center mb-2 rounded-md gap-2">
             <div className="bg-white p-2 md:p-5 rounded-md flex flex-col lg:justify-start lg:items-start  items-center justify-center gap-2">
               <h1 className="text-xs md:text-sm font-semibold flex items-center justify-start gap-1">
                 <span>{/* <FaSortAmountUpAlt /> */}</span>

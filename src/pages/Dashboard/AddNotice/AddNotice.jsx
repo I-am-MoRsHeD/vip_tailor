@@ -40,14 +40,14 @@ const AddNotice = () => {
       exit={{ opacity: 0 }}
       transition={{ duration: 2 }}
       key="flex_046445"
-      className="pb-5 lg:ml-3 xl:ml-9 overflow-scroll xl:h-[86vh] lg:h-[84.5vh] mx-3 lg:mx-0"
+      className="pb-0 lg:ml-3 xl:ml-9 overflow-scroll xl:h-[82.6vh] lg:h-[84.5vh] mx-3 lg:mx-0"
     >
       <DashBoardTitle
         title={"Admin"}
         subTitle={"Add, Edit your category section in one click. "}
       />
       <div>
-        <div className="flex flex-col-reverse md:flex-row gap-10 md:gap-20 bg-white 4xl:h-[65.5vh] 2xl:h-[63.5vh] mt-2 rounded-lg shadow justify-between py-6 md:py-10">
+        <div className="flex flex-col-reverse md:flex-row gap-10 md:gap-20 bg-white 4xl:h-[65.5vh] 2xl:h-[63.5vh]  mt-2 rounded-lg shadow justify-between py-6 md:py-10">
           <div className="w-full">
             <form onSubmit={handleSubmit(onSubmit)}>
               <div className="w-full mb-5 text-center">

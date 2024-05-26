@@ -10,7 +10,8 @@ const OrderedProductDetails = ({
   currentPage,
   setCurrentPage,
   totalPages,
-  refetch,
+  refetchByComplete,
+  refetchByPending,
   orderProducts,
   dataFetch,
 }) => {
@@ -78,10 +79,11 @@ const OrderedProductDetails = ({
                   <>
                     <td>{product?.advancedAmount}</td>
                     <td>
-                      {calculateDueAmount(
+                      {/* {calculateDueAmount(
                         product?.products,
                         product?.advancedAmount
-                      )}
+                      )} */}
+                      {product?.dueAmount}
                     </td>
                   </>
                 )}
@@ -97,7 +99,7 @@ const OrderedProductDetails = ({
                       <button
                         onClick={() => handleCompleteModal(product)}
                         // onClick={() => handleComplete(product)}
-                        className="btn btn-xs btn-accent"
+                        className="btn btn-xs text-white bg-blue-500 hover:bg-blue-600"
                       >
                         Complete
                       </button>
@@ -120,7 +122,7 @@ const OrderedProductDetails = ({
         <OrderCompleteModal
           data={selectedData}
           onClose={handleCloseModal}
-          refetchData={refetch}
+          refetchData={refetchByPending}
           complete={handleCompleteModal}
           dataFetch={dataFetch}
         />

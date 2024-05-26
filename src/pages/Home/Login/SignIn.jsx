@@ -150,10 +150,7 @@ const SignIn = () => {
               Or Login with
             </p>
             <div className="mt-2 py-1 px-2 flex justify-center items-center gap-4">
-              <button
-                onClick={handleGoogle}
-                className="flex items-center justify-center p-2 bg-slate-200 hover:bg-slate-300 rounded-full transition duration-300"
-              >
+              <button className="flex items-center justify-center p-2 bg-slate-200 hover:bg-slate-300 rounded-full transition duration-300">
                 <FaGoogle className="text-red-400 text-2xl" />
               </button>
               <button className="flex items-center justify-center p-2 bg-slate-200 hover:bg-slate-300 rounded-full transition duration-300">

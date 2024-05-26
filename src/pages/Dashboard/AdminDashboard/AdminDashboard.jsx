@@ -243,7 +243,7 @@ const AdminDashboard = ({ isSideMenuOpen, toggleSideMenu, closeSideMenu }) => {
     >
       {/* Dashboard */}
       <aside className="z-20 flex-shrink-0 fixed hidden w-[285px] overflow-y-auto bg-white lg:block lg:mt-20 4xl:ml-[12%] 3xl:ml-[11%] 2xl:ml-[13%] xl:ml-5 rounded-lg ">
-        <div className="2xl:h-[80vh] lg:h-[88.5vh] py-3 pl-3 flex flex-col 2xl:justify-between gap-9 shadow-xl">
+        <div className="2xl:h-[80vh] xl:h-[83vh] lg:h-[88.5vh] py-3 pl-3 flex flex-col 2xl:justify-between gap-9 ">
           {/* logo */}
           <div>
             <p className="font-bold text-lg">Admin Dashboard</p>
@@ -311,7 +311,7 @@ const AdminDashboard = ({ isSideMenuOpen, toggleSideMenu, closeSideMenu }) => {
           <div className="">
             <Navbar2></Navbar2>
           </div>
-          <div className="4xl:ml-[25.5%] 4xl:mr-[200px] 3xl:ml-[26%] 3xl:mr-[10%] lg:h-[83vh] 2xl:ml-[29%] 2xl:mr-[12%] xl:ml-[22%] xl:mr-0 lg:ml-[285px] mt-4">
+          <div className="4xl:ml-[25.5%] 4xl:mr-[200px] 3xl:ml-[26%] 3xl:mr-[10%] lg:h-[83vh] 2xl:ml-[29%] 2xl:mr-[12%] xl:ml-[22%] xl:mr-0 lg:ml-[285px] mt-3">
             <Outlet></Outlet>
           </div>
         </main>

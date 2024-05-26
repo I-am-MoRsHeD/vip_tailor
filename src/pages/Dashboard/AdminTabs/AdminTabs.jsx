@@ -83,14 +83,7 @@ const AdminTabs = ({ allOrderProducts }) => {
   let completeOrderAmount = 0;
   if (completedOrders && Array.isArray(completedOrders)) {
     completeOrderAmount = completedOrders?.reduce((total, item) => {
-      if (item?.products && Array.isArray(item?.products)) {
-        return (
-          total +
-          item?.products.reduce((acc, product) => acc + product?.quantity, 0)
-        );
-      } else {
-        return total;
-      }
+      return total + item?.totalAmount 
     }, 0);
   }
 
@@ -220,7 +213,17 @@ const AdminTabs = ({ allOrderProducts }) => {
                 </div>
                 <div className="">
                   <div className="my-5 flex flex-col justify-center 4xl:h-72 3xl:h-56 xl:h-56">
-                    {selectedData ? (
+                    {selectedData && (
+                      <div>
+                        <ProductStats
+                          totalSells={totalSellsByCategory}
+                          totalProduct={totalqunatity}
+                          setCommentRef={setCommentRef}
+                          categories={categories}
+                        />
+                      </div>
+                    )}
+                    {/* {selectedData ? (
                       <div>
                         <ProductStats
                           totalSells={totalSellsByCategory}
@@ -238,7 +241,7 @@ const AdminTabs = ({ allOrderProducts }) => {
                           categories={categories}
                         />
                       </div>
-                    )}
+                    )} */}
                   </div>
                 </div>
               </div>

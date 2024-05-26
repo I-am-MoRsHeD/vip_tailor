@@ -40,7 +40,7 @@ const ProductStatement = () => {
     });
   };
   return (
-    <div className="overflow-scroll 2xl:h-[80vh] lg:h-[84.5vh] lg:ml-3 xl:ml-9 mx-3 lg:mx-0">
+    <div className="overflow-scroll 2xl:h-[80vh] xl:h-[82.6vh] lg:h-[84.5vh] lg:ml-3 xl:ml-9 mx-3 lg:mx-0">
       <div className="mb-2">
         <DashBoardTitle
           title={"Admin"}

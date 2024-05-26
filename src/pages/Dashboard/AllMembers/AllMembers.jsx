@@ -136,14 +136,14 @@ const AllMembers = () => {
   };
 
   return (
-    <div className="md:ml-3 lg:ml-10 overflow-scroll xl:h-[85vh] lg:h-[84.5vh] h-screen mx-3 md:mx-0">
+    <div className="md:ml-3 lg:ml-10 overflow-scroll 2xl:h-[80vh] xl:h-[82.6vh] lg:h-[84.5vh] h-screen mx-3 md:mx-0">
       <div className="mb-2">
         <DashBoardTitle
           title={"Admin"}
           subTitle={"Add, Edit your category section in one click. "}
         />
       </div>
-      <div className=" bg-white rounded-md">
+      <div className=" bg-white rounded-md 4xl:h-[66vh] 3xl:h-[70vh]">
         <div className="md:mx-3 h-auto md:py-5">
           <div className="md:bg-gray-100 w-[100%] p-3 rounded-md">
             <h3 className="text-base font-semibold">User List</h3>

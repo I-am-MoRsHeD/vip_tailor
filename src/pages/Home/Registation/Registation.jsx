@@ -39,8 +39,9 @@ const Registation = () => {
         displayName: form.name.value,
         photoURL: "https://i.ibb.co/wzY7xRG/bronze.png",
       });
-      const resN = await axiosPublic.post("/user", userInfo).then((res) => {
-        if (res.data.success === "Success") {
+      await axiosPublic.post("/user", userInfo).then((res) => {
+        console.log(res);
+        if (res.status === 200) {
           Swal.fire({
             position: "top-end",
             icon: "success",
@@ -51,7 +52,7 @@ const Registation = () => {
           navigate("/message");
         }
       });
-      console.log(resN);
+      // console.log(resN);
       await getToken(result?.user?.email);
     } catch (error) {
       console.log(error);

@@ -63,9 +63,14 @@ const OrderedProduct = () => {
       const photoURL = data?.image?.[0];
       const img_url = photoURL ? await imageUpload(photoURL) : null;
       const imageUrl = img_url?.data?.display_url || defaultImageUrl;
-      // let dueAmount = data.
+
+      const advancedAmount = data?.advancedAmount;
+      const dueAmount = totalAmount - advancedAmount;
+
       const formData = {
         ...data,
+        dueAmount,
+        totalAmount,
         email: user?.email,
         image: imageUrl,
         status: "pending",
@@ -124,7 +129,7 @@ const OrderedProduct = () => {
   }, [watchProducts]);
 
   return (
-    <div className="overflow-scroll 2xl:h-[80vh] lg:h-[85vh] lg:ml-10 mx-3 lg:mx-0">
+    <div className="overflow-scroll 2xl:h-[80vh] xl:h-[82.6vh] lg:h-[85vh] lg:ml-10 mx-3 lg:mx-0">
       <div className="mb-2">
         <DashBoardTitle
           title={"Admin"}
@@ -153,6 +158,7 @@ const OrderedProduct = () => {
                     })}
                     type="number"
                     placeholder="Quantity"
+                    min={1}
                     className="input input-bordered w-1/6 focus:outline-none bg-[#F0F2F5] placeholder:text-black"
                   />
                   <input
@@ -214,11 +220,12 @@ const OrderedProduct = () => {
                   className="select select-bordered w-full focus:outline-none bg-[#F0F2F5]"
                   {...register("category", { required: true })}
                 >
-                  {categories.map((category) => (
-                    <option value={category.category} key={category._id}>
+                  {/* {categories.map((category) => (
+                    <option  value={category.category} key={category._id}>
                       {category.category}
                     </option>
-                  ))}
+                  ))} */}
+                  <option value="factory">factory</option>
                 </select>
               </div>
             </div>
