@@ -17,7 +17,7 @@ const OrderedList = () => {
   const [allData, setAllData] = useState();
   const axiosSecure = useAxiosSecure();
   const axiosPublic = useAxiosPublic();
-  const [orderProducts, dataFetch = refetch] = useOrderedProduct();
+  const [orderProducts, dataFetch] = useOrderedProduct();
   const handleStatus = (set) => {
     setStatus(set);
   };

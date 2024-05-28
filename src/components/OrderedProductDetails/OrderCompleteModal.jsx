@@ -24,6 +24,8 @@ const OrderCompleteModal = ({
     data?.products?.map((product) => product?.productStatus) || []
   );
 
+  const [totalDueAmount, setTotalDueAmount] = useState(data?.dueAmount);
+
   useEffect(() => setOrderId(data?._id), [data]);
 
   const handleComplete = async (product) => {
@@ -50,6 +52,9 @@ const OrderCompleteModal = ({
           data?.products[index]?._id === product?._id ? "complete" : status
         );
         setProductStatuses(updatedStatuses);
+        // due amount
+        const updatedDueAmount = data?.dueAmount - paidAmount;
+        setTotalDueAmount(updatedDueAmount)
 
         Swal.fire({
           position: "top-end",
@@ -62,6 +67,7 @@ const OrderCompleteModal = ({
         refetchData();
         dataFetch();
         setInput("");
+
       } else {
         Swal.fire({
           position: "top-end",
@@ -96,7 +102,7 @@ const OrderCompleteModal = ({
       refetchData();
     }
   };
-
+  console.log(data);
   return (
     <div className="fixed z-50 flex items-center justify-center inset-0 bg-black/50">
       <div className="bg-white rounded-lg shadow-xl w-full max-w-2xl">
@@ -109,7 +115,7 @@ const OrderCompleteModal = ({
           </button>
           <div className="flex justify-between pt-5 border-b-2 border-black">
             <h1 className="text-base font-semibold">
-              Total Due: {data?.dueAmount}
+              Total Due: {totalDueAmount}
             </h1>
             <h1 className="text-base font-semibold">
               Total Amount: {totalAmount}
@@ -188,7 +194,7 @@ const OrderCompleteModal = ({
             </div>
           </div>
         </div>
-        {data?.products?.length > 1 && (
+        {data?.products?.length > 0 && (
           <div className="flex justify-center items-center my-4">
             <button
               onClick={() => handleCompleteAll(orderId)}

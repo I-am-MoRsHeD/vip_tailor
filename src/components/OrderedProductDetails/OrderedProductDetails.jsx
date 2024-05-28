@@ -14,6 +14,7 @@ const OrderedProductDetails = ({
   refetchByPending,
   orderProducts,
   dataFetch,
+  totalDue
 }) => {
   const axiosPublic = useAxiosPublic();
   const [openModal, setOpenModal] = useState(false);

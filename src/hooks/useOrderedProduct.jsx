@@ -25,7 +25,7 @@ const useOrderedProduct = () => {
   });
   const role = userInfo?.role;
 
-  const { data: orderProducts = [], refetch } = useQuery({
+  const { data: orderProducts = [], refetch: dataFetch } = useQuery({
     queryKey: ["OrderProduct", email, role, itemsPerPage, currentPage],
     queryFn: async () => {
       // const res = await axiosPublic.get('/orderProduct')
@@ -45,7 +45,7 @@ const useOrderedProduct = () => {
   }, [orderProducts]);
   // console.log(orderProducts.totalCount);
 
-  return [orderProducts, refetch, currentPage, totalPages, setCurrentPage];
+  return [orderProducts, dataFetch, currentPage, totalPages, setCurrentPage];
 };
 
 export default useOrderedProduct;
