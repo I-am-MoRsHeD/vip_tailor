@@ -1,6 +1,8 @@
 {
   "name": "super-shop",
   "private": true,
+  "homepage":"https://viptailorstock.com/",
+  "proxy":"https://viptailorstock.com/",
   "version": "0.0.0",
   "type": "module",
   "scripts": {

@@ -90,7 +90,10 @@ const AddCategory = () => {
       category,
     };
     try {
-      const res = await axios.put(`/category/${cData._id}`, updatedCategory);
+      const res = await axiosPublic.put(
+        `/category/${cData._id}`,
+        updatedCategory
+      );
       if (res.status === 200) {
         Swal.fire({
           title: "Category Update!",
