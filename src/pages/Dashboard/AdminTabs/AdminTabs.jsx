@@ -83,7 +83,7 @@ const AdminTabs = ({ allOrderProducts }) => {
   let completeOrderAmount = 0;
   if (completedOrders && Array.isArray(completedOrders)) {
     completeOrderAmount = completedOrders?.reduce((total, item) => {
-      return total + item?.totalAmount 
+      return total + item?.totalAmount;
     }, 0);
   }
 
@@ -136,6 +136,7 @@ const AdminTabs = ({ allOrderProducts }) => {
                   <div>
                     <select
                       className="bg-white px-4 py-2 rounded-md"
+                      defaultValue={"VIP TAILORS"}
                       onChange={(e) => handleCategory(e.target.value)}
                       value={filter}
                     >

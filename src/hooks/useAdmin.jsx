@@ -14,7 +14,7 @@ const useAdmin = () => {
     queryFn: async () => {
       const res = await axios.get(`/user/admin/${user?.email}`);
       const resData = res?.data?.isAdmin;
-      setLoading(false);
+      setLoading();
       return resData;
     },
   });

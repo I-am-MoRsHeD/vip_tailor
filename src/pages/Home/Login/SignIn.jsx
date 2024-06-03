@@ -31,6 +31,7 @@ const SignIn = () => {
 
     try {
       const userCheck = await signInUser(email, password);
+      // console.log(userCheck.user.email);
       await getToken(userCheck?.user?.email);
       const loggedUser = await useUserRoll(userCheck?.user?.email);
       navigate(loggedUser === "admin" ? "/adminHome" : "/");

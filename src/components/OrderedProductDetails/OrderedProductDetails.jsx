@@ -14,7 +14,7 @@ const OrderedProductDetails = ({
   refetchByPending,
   orderProducts,
   dataFetch,
-  totalDue
+  totalDue,
 }) => {
   const axiosPublic = useAxiosPublic();
   const [openModal, setOpenModal] = useState(false);
@@ -27,12 +27,14 @@ const OrderedProductDetails = ({
   const handleCloseModal = () => {
     setOpenModal(false);
   };
-  const calculateDueAmount = (products, advancedAmount) => {
+  const calculateAmount = (products) => {
+    // console.log(products);
     const totalAmount = products?.reduce(
       (sum, product) => sum + product?.price * product?.quantity,
       0
     );
-    return totalAmount - advancedAmount;
+    console.log(totalAmount);
+    return totalAmount;
   };
   return (
     <div className="flex flex-col gap-4">
@@ -47,13 +49,14 @@ const OrderedProductDetails = ({
               <th>Quantity</th>
               {products?.items?.some((dd) => dd.status === "pending") && (
                 <>
+                  <th>Total Amount</th>
                   <th>Advanced</th>
                   <th>Due</th>
                 </>
               )}
 
               <th>Delivery Date</th>
-              <th>Image</th>
+              {/* <th>Image</th> */}
               <th>Status</th>
             </tr>
           </thead>
@@ -78,21 +81,16 @@ const OrderedProductDetails = ({
                 </td>
                 {product?.status === "pending" && (
                   <>
+                    <td>{calculateAmount(product?.products)}</td>
+                    <td>{product?.dueAmount}</td>
                     <td>{product?.advancedAmount}</td>
-                    <td>
-                      {/* {calculateDueAmount(
-                        product?.products,
-                        product?.advancedAmount
-                      )} */}
-                      {product?.dueAmount}
-                    </td>
                   </>
                 )}
 
                 <td>{new Date(product?.deliveryDate).toLocaleDateString()}</td>
-                <td>
+                {/* <td>
                   <img className="w-10 h-10" src={product?.image} alt="" />
-                </td>
+                </td> */}
                 <th>
                   {product?.status === "pending" ? (
                     <div>
