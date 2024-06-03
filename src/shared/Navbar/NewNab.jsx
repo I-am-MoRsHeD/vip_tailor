@@ -28,6 +28,7 @@ const NewNav = () => {
     const element = document.getElementById(target);
     if (element) {
       element.scrollIntoView({ behavior: "smooth" });
+      setIsMenuOpen(false)
     }
   };
 
@@ -167,9 +168,9 @@ const NewNav = () => {
       <li className="">
         <NavLink
           to="/"
+          onClick={() => setIsMenuOpen(false)}
           className={({ isActive }) =>
-            `${
-              isActive ? "active text-[#fff]" : "text-[#fff]"
+            `${isActive ? "active text-[#fff]" : "text-[#fff]"
             }  transition navs duration-300 text-base xl:text-lg font-semibold `
           }
         >
@@ -196,10 +197,10 @@ const NewNav = () => {
 
       <li>
         <NavLink
+          onClick={() => setIsMenuOpen(false)}
           to="/contact"
           className={({ isActive }) =>
-            `${
-              isActive ? "active text-[#fff]" : "text-[#fff]"
+            `${isActive ? "active text-[#fff]" : "text-[#fff]"
             } duration-300 text-base xl:text-lg font-semibold lg:mr-10 mr-0 transition navs mb-2 lg:mb-2`
           }
         >
@@ -216,6 +217,7 @@ const NewNav = () => {
           </button>
         ) : (
           <Link
+            onClick={() => setIsMenuOpen(false)}
             to="/login"
             className="lg:bg-white mb-2 lg:mb-0 bg-yellow-950 lg:text-black text-white text-base xl:text-lg font-semibold px-4 py-2 rounded"
           >
@@ -226,6 +228,7 @@ const NewNav = () => {
       <li>
         {!user ? (
           <Link
+            onClick={() => setIsMenuOpen(false)}
             to="/register"
             className="lg:bg-white bg-yellow-950 lg:text-black text-white text-base xl:text-lg font-semibold px-4 py-2  rounded "
           >
@@ -239,9 +242,8 @@ const NewNav = () => {
   );
   return (
     <div
-      className={`max-w-screen z-10 fixed top-0 left-0 md:py-4 py-0 right-0 ${
-        isScrolled ? "bg-[#403030] shadow-sm" : "bg-[#403030]"
-      }`}
+      className={`max-w-screen z-10 fixed top-0 left-0 md:py-4 py-0 right-0 ${isScrolled ? "bg-[#403030] shadow-sm" : "bg-[#403030]"
+        }`}
     >
       <div className="max-w-[1280px] w-full mx-auto">
         <div className="flex flex-row justify-between w-full">
@@ -269,11 +271,10 @@ const NewNav = () => {
                 </svg>
               </div>
               <ul
-                className={`text-white absolute md:-top-4 top-0 left-0 right-0 w-[100vw]  transition-all duration-500 flex flex-col items-center text-center gap-5 hero-overlay ${
-                  isMenuOpen
-                    ? "opacity-100 visible h-screen"
-                    : "opacity-0 invisible h-0"
-                } bg-opacity-90 bg-black py-4 shadow`}
+                className={`text-white absolute md:-top-4 top-0 left-0 right-0 w-[100vw] transition-all duration-500 flex flex-col items-center text-center gap-5 hero-overlay ${isMenuOpen
+                  ? "opacity-100 visible h-screen"
+                  : "opacity-0 invisible h-0"
+                  } bg-opacity-90 bg-black py-4 shadow`}
               >
                 {navlinks}
               </ul>
