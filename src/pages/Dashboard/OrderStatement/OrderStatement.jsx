@@ -93,6 +93,7 @@ const OrderStatement = () => {
                 <th>Delivery Date</th>
                 <th>Quantity</th>
                 <th>Price</th>
+                <th>Status</th>
                 <th>Action</th>
               </tr>
             </thead>
@@ -117,6 +118,7 @@ const OrderStatement = () => {
                     {product?.products?.reduce((total, pp) => total + pp?.quantity, 0)}
                   </td>
                   <td>{product?.totalAmount}</td>
+                  <td>{product?.status}</td>
                   <td>
                     <button
                       onClick={() => handleDelete(product)}

@@ -71,7 +71,7 @@ const AdminDashboard = ({ isSideMenuOpen, toggleSideMenu, closeSideMenu }) => {
           <span className="ml-4">Home</span>
         </NavLink>
       </li>
-      {/* <li className="relative px-2 py-0">
+      <li className="relative px-2 py-0">
         <NavLink
           defaultChecked
           className={({ isActive }) =>
@@ -84,7 +84,7 @@ const AdminDashboard = ({ isSideMenuOpen, toggleSideMenu, closeSideMenu }) => {
           <MdOutlineAddCircleOutline />
           <span className="ml-4">Add Category</span>
         </NavLink>
-      </li> */}
+      </li>
       <li className="relative px-2 py-0">
         <NavLink
           defaultChecked
