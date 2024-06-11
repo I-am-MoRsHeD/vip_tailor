@@ -82,8 +82,8 @@ const OrderedProductDetails = ({
                 {product?.status === "pending" && (
                   <>
                     <td>{calculateAmount(product?.products)}</td>
-                    <td>{product?.dueAmount}</td>
                     <td>{product?.advancedAmount}</td>
+                    <td>{product?.dueAmount}</td>
                   </>
                 )}
 
