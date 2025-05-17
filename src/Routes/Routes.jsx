@@ -10,7 +10,7 @@ import OrderedProduct from "../pages/Dashboard-Employee/OrderedProduct/OrderedPr
 import OrderedList from "../pages/Dashboard-Employee/OrderedList/OrderedList.jsx";
 import MembersRequest from "../pages/Dashboard/MembersRequest/MembersRequest.jsx";
 import AllMembers from "../pages/Dashboard/AllMembers/AllMembers.jsx";
-import Errorpage from "../pages/ErrorPage/Errorpage.jsx";
+import Errorpage from "../pages/Errorpage/Errorpage.jsx";
 import AdminRoute from "./AdminRoute.jsx";
 import ProductStatement from "../pages/Dashboard/ProductStatement/ProductStatement.jsx";
 import OrderStatement from "../pages/Dashboard/OrderStatement/OrderStatement.jsx";
